@@ -1,0 +1,5 @@
+<resources>
+    <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
+    <string name="oh_snap">Ôi hỏng!</string>
+    <string name="detail">Chi tiết</string>
+</resources>
