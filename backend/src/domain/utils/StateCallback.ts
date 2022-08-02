@@ -1,4 +1,4 @@
-export default interface StateCallback<T>{
-    onSuccess(data:T):any
-    onFailure(code:number,message:string):any
+export default interface StateCallback<T, M> {
+    onSuccess(data: T): any
+    onFailure(code: number, message: M): any
 }

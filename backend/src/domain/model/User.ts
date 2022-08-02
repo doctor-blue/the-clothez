@@ -36,4 +36,20 @@ export default class User {
         this.gender = gender;
     }
 
+    static fromObj(obj: any): User {
+        return new User(
+            obj.user_id,
+            obj.first_name,
+            obj.last_name,
+            obj.user_name,
+            obj.email,
+            obj.phone_number,
+            obj.avartar,
+            obj.is_active,
+            obj.dob,
+            obj.permission_id,
+            obj.gender
+        )
+    }
+
 }
