@@ -10,7 +10,7 @@ export class AuthenticationController {
 
     signIn = async (req: Request, res: Response) => {
         const { user_name, password } = req.body
-        this.authenticationRepo.signIn(user_name, password, {
+        this.authenticationRepo.login(user_name, password, {
             onSuccess(data) {
                 res.status(200).json(data);
             },
@@ -22,7 +22,8 @@ export class AuthenticationController {
 
     signUp = async (req: Request, res: Response) => {
         const user = User.fromObj(req.body);
-        this.authenticationRepo.signUp(user, {
+        const password = req.body.password;
+        this.authenticationRepo.signUp(user, password, {
             onSuccess(data) {
                 if (data)
                     res.status(200).json(SUCCESS_STATUS)

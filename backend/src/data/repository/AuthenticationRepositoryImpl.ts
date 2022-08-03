@@ -5,28 +5,27 @@ import AuthenticationRepository from "../../domain/repository/AuthenticationRepo
 import StateCallback from "../../domain/utils/StateCallback";
 import { postgresPool } from "../source/db";
 import bcrypt from 'bcrypt';
-import { json } from "stream/consumers";
 import { Token } from "../../domain/model/Token";
 
 import jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from './ENVEXAMPLE';
 
 
 function jwtWebToken(user_id: string, user_name: string) {
     const user = { user_id, user_name };
-    const accessToken = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '20s' });
-    const refreshToken = jwt.sign(user, REFRESH_TOKEN_SECRET, { expiresIn: '5m' });
+    const accessToken = jwt.sign(user, "process.env.ACCESS_TOKEN_SECRET", { expiresIn: '20s' });
+    const refreshToken = jwt.sign(user, "process.env.REFRESH_TOKEN_SECRET", { expiresIn: '5m' });
     return new Token(accessToken, refreshToken);
 }
 
 export default class AuthenticationRepositoryImpl implements AuthenticationRepository {
     private signInQuery = "select * from users where email = $1 or user_name = $1";
+    private signUpQuery = "";
 
-    signIn(userName: string, password: string, callback: StateCallback<Token, Status>) {
+    login(userName: string, password: string, callback: StateCallback<Token, Status>) {
         this.startSignIn(userName, password, callback)
     }
 
-    signUp(user: User, callback: StateCallback<boolean, Status>) {
+    signUp(user: User,password:string, callback: StateCallback<boolean, Status>) {
         this.startSignUp(user, callback);
     }
 
