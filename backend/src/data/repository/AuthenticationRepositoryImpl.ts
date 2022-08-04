@@ -8,6 +8,8 @@ import bcrypt from 'bcrypt';
 import { Token } from "../../domain/model/Token";
 
 import jwt from 'jsonwebtoken';
+import { pool } from "../source/pgdb";
+
 
 
 function jwtWebToken(user_id: string, user_name: string) {
@@ -19,14 +21,14 @@ function jwtWebToken(user_id: string, user_name: string) {
 
 export default class AuthenticationRepositoryImpl implements AuthenticationRepository {
     private signInQuery = "select * from users where email = $1 or user_name = $1";
-    private signUpQuery = "";
+    private signUpQuery = "insert into users(first_name,last_name,email,permission_id,password) values($1,$2,$3,$4,$5) returning *";
 
     login(userName: string, password: string, callback: StateCallback<Token, Status>) {
         this.startSignIn(userName, password, callback)
     }
 
-    signUp(user: User,password:string, callback: StateCallback<boolean, Status>) {
-        this.startSignUp(user, callback);
+    signUp(user: User, password: string, callback: StateCallback<boolean, Status>) {
+        this.startSignUp(user, password, callback);
     }
 
     forgotPassword(email: string) {
@@ -57,9 +59,13 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
         }
     }
 
-    private startSignUp = async (user: User, callback: StateCallback<boolean, Status>) => {
+    private startSignUp = async (user: User, password: string, callback: StateCallback<boolean, Status>) => {
         try {
-
+            const hashedPassword = await bcrypt.hash(password, 20);
+            const newUser = await pool.query(this.signUpQuery, [
+                user.first_name, user.last_name, user.email, 0, hashedPassword
+            ]);
+            callback.onSuccess(newUser.rows.length !== 0)
         } catch (err) {
             callback.onFailure(401, AUTHENTICATION_FAILURE)
         }
