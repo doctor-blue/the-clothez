@@ -14,7 +14,6 @@ export class AuthenticationController {
         const { user_name, password } = req.body
         this.authenticationRepo.login(user_name, password, {
             onSuccess(data) {
-                res.cookie(REFRESH_TOKEN_KEY, data.refresh_token, { httpOnly: true });
                 res.status(200).json(data);
             },
             onFailure(code, message) {
@@ -25,7 +24,7 @@ export class AuthenticationController {
 
     signUp = async (req: Request, res: Response) => {
         const signUpRequest = SignUpRequest.fromObj(req.body);
-        this.authenticationRepo.signUp(signUpRequest.userInfo, signUpRequest.password, {
+        this.authenticationRepo.signUp(signUpRequest.user_info, signUpRequest.password, {
             onSuccess(data) {
                 if (data)
                     res.status(200).json(SUCCESS_STATUS)
@@ -34,8 +33,6 @@ export class AuthenticationController {
                 res.status(code).json(message)
             },
         })
-
-        res.status(200).send("Signup success!!");
     }
 
     forgotPassword = async (req: Request, res: Response) => {

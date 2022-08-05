@@ -1,11 +1,11 @@
 import User from "../../domain/model/User";
 
 export class SignUpRequest {
-    userInfo: User;
+    user_info: User;
     password: string;
 
-    constructor(userInfo: User, password: string) {
-        this.userInfo = userInfo;
+    constructor(user_info: User, password: string) {
+        this.user_info = user_info;
         this.password = password;
     }
 

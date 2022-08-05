@@ -1,4 +1,4 @@
-import { AUTHENTICATION_FAILURE, INCORRECT_USER_NAME_PWD } from "../../domain/const/ErrorConst";
+import { AUTHENTICATION_FAILURE, EMAIL_ALREADY_EXISTS, INCORRECT_USER_NAME_PWD } from "../../domain/const/ErrorConst";
 import { Status } from "../../domain/model/Status";
 import User from "../../domain/model/User";
 import AuthenticationRepository from "../../domain/repository/AuthenticationRepository";
@@ -8,26 +8,37 @@ import bcrypt from 'bcrypt';
 import { Token } from "../../domain/model/Token";
 
 import jwt from 'jsonwebtoken';
-import { pool } from "../source/pgdb";
+
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 
-
-function jwtWebToken(user_id: string, user_name: string) {
+function jwtWebToken(user_id: string, user_name: string): Token {
     const user = { user_id, user_name };
-    const accessToken = jwt.sign(user, "process.env.ACCESS_TOKEN_SECRET", { expiresIn: '20s' });
-    const refreshToken = jwt.sign(user, "process.env.REFRESH_TOKEN_SECRET", { expiresIn: '5m' });
+    let acc = '';
+    let ref = '';
+    if (refreshTokenSecret) ref = refreshTokenSecret;
+    if (accessTokenSecret) acc = accessTokenSecret;
+
+    const accessToken = jwt.sign(user, acc, { expiresIn: '20s' });
+    const refreshToken = jwt.sign(user, ref, { expiresIn: '5m' });
     return new Token(accessToken, refreshToken);
 }
 
+
+
 export default class AuthenticationRepositoryImpl implements AuthenticationRepository {
-    private signInQuery = "select * from users where email = $1 or user_name = $1";
-    private signUpQuery = "insert into users(first_name,last_name,email,permission_id,password) values($1,$2,$3,$4,$5) returning *";
+    private userEmailQuery = "select * from users where email = $1 or user_name = $1";
+    private signUpQuery = "insert into users(first_name,last_name,user_name,email,dob,permission_id,password) values($1,$2,$3,$4,$5,$6,$7) returning *";
+
+    
 
     login(userName: string, password: string, callback: StateCallback<Token, Status>) {
         this.startSignIn(userName, password, callback)
     }
 
     signUp(user: User, password: string, callback: StateCallback<boolean, Status>) {
+
         this.startSignUp(user, password, callback);
     }
 
@@ -41,12 +52,13 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
 
     private startSignIn = async (userName: string, password: string, callback: StateCallback<Token, Status>) => {
         try {
-            const users = await postgresPool.query(this.signInQuery, [userName]);
+            const users = await postgresPool.query(this.userEmailQuery, [userName]);
             if (users.rows.length === 0) {
                 callback.onFailure(401, INCORRECT_USER_NAME_PWD);
                 return;
             }
-            const validPassword = await bcrypt.compare(password, users.rows[0].user_password);
+            const validPassword = await bcrypt.compare(password, users.rows[0].password);
+
             if (!validPassword) {
                 callback.onFailure(401, INCORRECT_USER_NAME_PWD);
                 return;
@@ -55,15 +67,24 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
             // generate and store token
             callback.onSuccess(tokens)
         } catch (err) {
+            console.log('signin err', err);
+
             callback.onFailure(401, AUTHENTICATION_FAILURE)
         }
     }
 
     private startSignUp = async (user: User, password: string, callback: StateCallback<boolean, Status>) => {
+
         try {
-            const hashedPassword = await bcrypt.hash(password, 20);
-            const newUser = await pool.query(this.signUpQuery, [
-                user.first_name, user.last_name, user.email, 0, hashedPassword
+            const users = await postgresPool.query(this.userEmailQuery, [user.email]);
+            if (users.rows.length !== 0) {
+                callback.onFailure(401, EMAIL_ALREADY_EXISTS);
+                return;
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newUser = await postgresPool.query(this.signUpQuery, [
+                user.first_name, user.last_name, user.user_name, user.email, user.dob, 1, hashedPassword
             ]);
             callback.onSuccess(newUser.rows.length !== 0)
         } catch (err) {

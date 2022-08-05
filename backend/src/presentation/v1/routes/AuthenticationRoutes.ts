@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticationToken } from '../Authorization';
 import { AuthenticationController } from '../controllers/AuthenticationControllers';
 import { v1Path } from '../path';
 
@@ -9,4 +10,4 @@ export const authPath = v1Path + "auth"
 
 router.post("/signIn", controller.signIn);
 router.post("/signUp", controller.signUp);
-router.post("/forgot", controller.forgotPassword)
+router.post("/forgot", authenticationToken, controller.forgotPassword)

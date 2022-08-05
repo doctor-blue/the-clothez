@@ -17,7 +17,7 @@ export default class User {
         user_name: string,
         email: string,
         phone_number: string,
-        avartar: string,
+        avatar: string,
         gender: number,
         is_active: boolean,
         dob: string,
@@ -29,14 +29,14 @@ export default class User {
         this.user_name = user_name;
         this.email = email;
         this.phone_number = phone_number;
-        this.avatar = avartar;
+        this.avatar = avatar;
         this.is_active = is_active;
         this.dob = dob;
         this.permission_id = permission_id;
         this.gender = gender;
     }
 
-    static fromObj(obj: any): User {
+    static fromObj(obj: any): User {        
         return new User(
             obj.user_id,
             obj.first_name,
@@ -44,11 +44,11 @@ export default class User {
             obj.user_name,
             obj.email,
             obj.phone_number,
-            obj.avartar,
+            obj.avatar,
+            obj.gender,
             obj.is_active,
             obj.dob,
-            obj.permission_id,
-            obj.gender
+            obj.permission_id
         )
     }
 
