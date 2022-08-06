@@ -11,5 +11,5 @@ export default interface AuthenticationRepository extends Repository {
 
     forgotPassword(email: string): any
 
-    refreshToken(refreshToken: string): any
+    refreshToken(refreshToken: string, callback: StateCallback<Token, Status>): any
 }

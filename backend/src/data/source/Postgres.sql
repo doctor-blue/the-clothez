@@ -17,8 +17,8 @@ CREATE TABLE PERMISSION(
 );
 
 INSERT INTO PERMISSION(permission_type,description) VAlUES (0,'Normal user');
-INSERT INTO PERMISSION(permission_type,description) VAlUES (1,'Super Admin');
-INSERT INTO PERMISSION(permission_type,description) VAlUES (2,'Admin');
+INSERT INTO PERMISSION(permission_type,description) VAlUES (1,'Admin');
+INSERT INTO PERMISSION(permission_type,description) VAlUES (2,'Super Admin');
 
 
 CREATE TABLE USERS (

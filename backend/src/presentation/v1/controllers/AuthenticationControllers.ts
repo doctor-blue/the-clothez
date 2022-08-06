@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import RepositoryModule from '../../../di/RepositoryModule'
-import { REFRESH_TOKEN_KEY } from '../../../domain/const/Authorization'
 import { SUCCESS_STATUS } from '../../../domain/const/StatusConst'
-import User from '../../../domain/model/User'
 import AuthenticationRepository from '../../../domain/repository/AuthenticationRepository'
 import { SignUpRequest } from '../../request/SignUpRequest'
 
@@ -28,6 +26,17 @@ export class AuthenticationController {
             onSuccess(data) {
                 if (data)
                     res.status(200).json(SUCCESS_STATUS)
+            },
+            onFailure(code, message) {
+                res.status(code).json(message)
+            },
+        })
+    }
+
+    getRefreshToken = async (req: Request, res: Response) => {
+        this.authenticationRepo.refreshToken(req.body.refresh_token, {
+            onSuccess(data) {
+                res.status(200).json(data)
             },
             onFailure(code, message) {
                 res.status(code).json(message)

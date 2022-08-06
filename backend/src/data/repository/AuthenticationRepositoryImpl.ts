@@ -20,8 +20,8 @@ function jwtWebToken(user_id: string, user_name: string): Token {
     if (refreshTokenSecret) ref = refreshTokenSecret;
     if (accessTokenSecret) acc = accessTokenSecret;
 
-    const accessToken = jwt.sign(user, acc, { expiresIn: '20s' });
-    const refreshToken = jwt.sign(user, ref, { expiresIn: '5m' });
+    const accessToken = jwt.sign(user, acc, { expiresIn: '1 days' });
+    const refreshToken = jwt.sign(user, ref, { expiresIn: '7 days' });
     return new Token(accessToken, refreshToken);
 }
 
@@ -31,7 +31,7 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
     private userEmailQuery = "select * from users where email = $1 or user_name = $1";
     private signUpQuery = "insert into users(first_name,last_name,user_name,email,dob,permission_id,password) values($1,$2,$3,$4,$5,$6,$7) returning *";
 
-    
+
 
     login(userName: string, password: string, callback: StateCallback<Token, Status>) {
         this.startSignIn(userName, password, callback)
@@ -46,9 +46,22 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
         throw new Error("Method not implemented.");
     }
 
-    refreshToken(refreshToken: string) {
+    refreshToken(refreshToken: string, callback: StateCallback<Token, Status>) {
+        if (!refreshToken)
+            callback.onFailure(401, new Status(401, 'refresh token is null.'));
+        let ref = '';
 
+        if (refreshTokenSecret) ref = refreshTokenSecret
+
+        jwt.verify(refreshToken, ref, (error: any, user: any) => { 
+            if (error)
+                callback.onFailure(403, new Status(403, 'refresh token error.'));
+
+            callback.onSuccess(jwtWebToken(user.user_id, user.email));
+        });
     }
+
+
 
     private startSignIn = async (userName: string, password: string, callback: StateCallback<Token, Status>) => {
         try {

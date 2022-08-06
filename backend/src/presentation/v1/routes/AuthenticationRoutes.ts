@@ -10,4 +10,5 @@ export const authPath = v1Path + "auth"
 
 router.post("/signIn", controller.signIn);
 router.post("/signUp", controller.signUp);
+router.post("/refresh_token", controller.getRefreshToken);
 router.post("/forgot", authenticationToken, controller.forgotPassword)
