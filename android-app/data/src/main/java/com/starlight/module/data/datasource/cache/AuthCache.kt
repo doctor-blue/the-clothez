@@ -62,11 +62,11 @@ class AuthCache(
 
 
     fun setToken(
-        token: TokenEntity
+        token: TokenEntity?
     ) {
         CoroutineScope(Dispatchers.Default).launch {
             context.userDataStore.edit { preferences ->
-                preferences[TOKEN] = Gson().toJson(token)
+                preferences[TOKEN] = if (token != null) Gson().toJson(token) else ""
             }
         }
     }

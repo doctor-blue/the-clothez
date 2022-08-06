@@ -16,5 +16,5 @@ app.get('/', (req: Request, res: Response) => {
 app.use(authPathV1, authRoutesV1)
 
 app.listen(port, () => {
-    console.log("Server running", ip.address());
+    console.log("Server running on: ", ip.address() + ":" + port);
 })

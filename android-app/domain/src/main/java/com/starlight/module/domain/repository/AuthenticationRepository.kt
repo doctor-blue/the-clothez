@@ -12,4 +12,6 @@ interface AuthenticationRepository {
     fun emailSignUp(user: User, password: String): Flow<DataState<Status>>
 
     fun refreshToken(refreshToken: String): Flow<DataState<Status>>
+
+    fun logout(): Flow<DataState<Status>>
 }
