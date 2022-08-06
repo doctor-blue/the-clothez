@@ -11,7 +11,7 @@ import retrofit2.http.POST
 
 interface AuthService : IClothezService {
 
-    @POST("/api/v1/auth/signIn")
+    @POST("/api/v1/auth/login")
     suspend fun login(@Body request: LoginRequest): IResponse<TokenEntity>
 
     @POST("/api/v1/auth/signUp")

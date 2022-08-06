@@ -9,7 +9,7 @@ import { IResponse } from '../../response/IResponse'
 export class AuthenticationController {
     private authenticationRepo: AuthenticationRepository = RepositoryModule.getInstance().provideAuthenticationRepository()
 
-    signIn = async (req: Request, res: Response) => {
+    login = async (req: Request, res: Response) => {
         const { user_name, password } = req.body
         this.authenticationRepo.login(user_name, password, {
             onSuccess(data) {
