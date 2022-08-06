@@ -13,9 +13,13 @@ export class AuthenticationController {
         this.authenticationRepo.login(user_name, password, {
             onSuccess(data) {
                 res.status(200).json(data);
+                console.log("login success", data);
+
             },
             onFailure(code, message) {
                 res.status(code).json(message)
+                console.log("login failure ", code, message);
+
             },
         })
     }

@@ -33,7 +33,7 @@ CREATE TABLE USERS (
     created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     avatar VARCHAR DEFAULT '',
-    gender VARCHAR(200),
+    gender int4,
     dob timestamp,
     permission_id int4 NOT NULL, 
 	PRIMARY KEY (user_id),

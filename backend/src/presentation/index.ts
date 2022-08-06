@@ -3,6 +3,7 @@ import 'dotenv/config'
 import express, { Application, Request, Response, NextFunction } from 'express';
 import User from '../domain/model/User';
 import { SignUpRequest } from './request/SignUpRequest';
+import ip from 'ip';
 import { authPath as authPathV1, router as authRoutesV1 } from './v1/routes/AuthenticationRoutes';
 
 const app: Application = express()
@@ -15,14 +16,5 @@ app.get('/', (req: Request, res: Response) => {
 app.use(authPathV1, authRoutesV1)
 
 app.listen(port, () => {
-    console.log("Server running");
+    console.log("Server running", ip.address());
 })
-// console.log(
-//     JSON.stringify(
-//         new SignUpRequest(
-//             new User("", "Nguyen", "Van Tan", 'van-tan', "vantan.nguyen0726@gmail.com", "0987654321", "", 1, true, String(new Date()), "")
-//             ,
-//             "nao123456"
-//         )
-//     )
-// );

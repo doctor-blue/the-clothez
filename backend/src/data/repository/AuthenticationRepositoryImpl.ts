@@ -34,6 +34,8 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
 
 
     login(userName: string, password: string, callback: StateCallback<Token, Status>) {
+        console.log("Login ", userName, password);
+
         this.startSignIn(userName, password, callback)
     }
 
@@ -53,7 +55,7 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
 
         if (refreshTokenSecret) ref = refreshTokenSecret
 
-        jwt.verify(refreshToken, ref, (error: any, user: any) => { 
+        jwt.verify(refreshToken, ref, (error: any, user: any) => {
             if (error)
                 callback.onFailure(403, new Status(403, 'refresh token error.'));
 
