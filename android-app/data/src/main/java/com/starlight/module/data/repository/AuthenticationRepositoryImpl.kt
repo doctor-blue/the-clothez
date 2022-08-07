@@ -1,4 +1,4 @@
-package com.starlight.module.data.datasource.repository
+package com.starlight.module.data.repository
 
 import com.starlight.module.data.datasource.cache.AuthCache
 import com.starlight.module.data.datasource.mappers.UserMapper

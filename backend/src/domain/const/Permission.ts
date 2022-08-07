@@ -1,4 +1,4 @@
 
-const NORMAL = 0
-const ADMIN = 1
-const SUPER_ADMIN = 2
+export const NORMAL = 0
+export const ADMIN = 1
+export const SUPER_ADMIN = 2

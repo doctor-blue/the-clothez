@@ -1,5 +1,7 @@
 import AuthenticationRepositoryImpl from "../data/repository/AuthenticationRepositoryImpl";
+import { CategoryRepositoryImpl } from "../data/repository/CategoryRepositoryImpl";
 import AuthenticationRepository from "../domain/repository/AuthenticationRepository";
+import { CategoryRepository } from "../domain/repository/CategoryRepository";
 
 
 export default class RepositoryModule {
@@ -16,5 +18,8 @@ export default class RepositoryModule {
 
     provideAuthenticationRepository(): AuthenticationRepository {
         return new AuthenticationRepositoryImpl()
+    }
+    provideCategoryRepository(): CategoryRepository {
+        return new CategoryRepositoryImpl()
     }
 }

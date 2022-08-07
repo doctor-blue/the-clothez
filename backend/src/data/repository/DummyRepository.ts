@@ -1,3 +1,0 @@
-class DummyRepository implements Repository{
-  
-}

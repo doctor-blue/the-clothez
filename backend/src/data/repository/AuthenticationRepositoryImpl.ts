@@ -13,8 +13,8 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 
-function jwtWebToken(user_id: string, user_name: string): Token {
-    const user = { user_id, user_name };
+function jwtWebToken(user_id: string, user_name: string, permission_type: string): Token {
+    const user = { user_id, user_name, permission_type };
     let acc = '';
     let ref = '';
     if (refreshTokenSecret) ref = refreshTokenSecret;
@@ -59,7 +59,7 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
             if (error)
                 callback.onFailure(403, new Status(403, 'refresh token error.'));
 
-            callback.onSuccess(jwtWebToken(user.user_id, user.email));
+            callback.onSuccess(jwtWebToken(user.user_id, user.email, user.permission_type));
         });
     }
 
@@ -78,7 +78,7 @@ export default class AuthenticationRepositoryImpl implements AuthenticationRepos
                 callback.onFailure(401, INCORRECT_USER_NAME_PWD);
                 return;
             }
-            const tokens = jwtWebToken(users.rows[0].user_id, users.rows[0].email);
+            const tokens = jwtWebToken(users.rows[0].user_id, users.rows[0].email,users.rows[0].permission_type);
             // generate and store token
             callback.onSuccess(tokens)
         } catch (err) {
