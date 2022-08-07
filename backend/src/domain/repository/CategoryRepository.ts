@@ -1,4 +1,4 @@
-import { Category, SubCategory } from "../model/Category";
+import { Category, CategoryInfo, SubCategory } from "../model/Category";
 import { Status } from "../model/Status";
 import StateCallback from "../utils/StateCallback";
 
@@ -10,7 +10,7 @@ export interface CategoryRepository extends Repository {
 
     deleteCategory(categoryId: string, callback: StateCallback<boolean, Status>): any;
 
-    getAllCategories(callback: StateCallback<string, Status>): any;
+    getAllCategories(callback: StateCallback<CategoryInfo, Status>): any;
 
     createSubCategory(subCategory: SubCategory, callback: StateCallback<string, Status>): any;
 

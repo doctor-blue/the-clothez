@@ -45,4 +45,17 @@ export class SubCategory {
             obj.lang
         );
     }
+};
+
+export class CategoryInfo {
+    categories: Array<Category>;
+    subCategories: Array<SubCategory>;
+
+    constructor(
+        categories: Array<Category>,
+        subCategories: Array<SubCategory>
+    ) {
+        this.categories = categories;
+        this.subCategories = subCategories;
+    }
 }

@@ -12,8 +12,8 @@ export function authenticationToken(req: Request, res: Response, next: Function)
     let acc = '';
     if (process.env.ACCESS_TOKEN_SECRET) acc = process.env.ACCESS_TOKEN_SECRET
 
-    jwt.verify(token, acc, (err: any, user: any) => {
-        if (err) return res.status(403).json({ error: err });
+    jwt.verify(token, acc, (err: any, user: any) => {        
+        if (err) return res.status(401).json(new IResponse(null, AUTHENTICATION_FAILURE));
         next();
     });
 };
@@ -29,7 +29,7 @@ export function authenticationAdminToken(req: Request, res: Response, next: Func
     jwt.verify(token, acc, (err: any, user: any) => {
         console.log(user.permission_type);
 
-        if (user.permission_type < ADMIN || err) return res.status(403).json(new IResponse(null, AUTHENTICATION_FAILURE));
+        if (user.permission_type < ADMIN || err) return res.status(401).json(new IResponse(null, AUTHENTICATION_FAILURE));
 
         next();
     });
