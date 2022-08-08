@@ -20,8 +20,8 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         this.startDeleteCategoryQuery(categoryId, callback);
     }
 
-    getAllCategories(callback: StateCallback<CategoryInfo, Status>) {
-        this.startGetAllCategories(callback)
+    getAllCategories(locale: string, callback: StateCallback<CategoryInfo, Status>) {
+        this.startGetAllCategories(locale, callback)
 
     }
 
@@ -37,17 +37,19 @@ export class CategoryRepositoryImpl implements CategoryRepository {
         this.startDeleteSubCategoryQuery(subCategoryId, callback)
     }
 
-    private getCategoriesQuery = "SELECT CATEGORY.ID, CATEGORY_DESC.name,CATEGORY_DESC.description, CATEGORY_DESC.lang FROM CATEGORY INNER JOIN CATEGORY_DESC ON CATEGORY.ID = CATEGORY_DESC.CATEGORY_ID WHERE LANG=$1";
-    private getSubCategoriesQuery = "SELECT * FROM SUB_CATEGORY"
-    private async startGetAllCategories(callback: StateCallback<CategoryInfo, Status>) {
+    private getCategoriesQuery = "SELECT category.id, category_desc.name,category_desc.description, category_desc.lang FROM category INNER JOIN category_desc ON category.id = category_desc.category_id WHERE lang=$1";
+    private getSubCategoriesQuery = "SELECT sub_category.id, sub_category_desc.name,sub_category_desc.description, sub_category_desc.lang FROM sub_category INNER JOIN sub_category_desc ON sub_category.id = sub_category_desc.sub_category_id WHERE lang=$1"
+    private async startGetAllCategories(locale: string, callback: StateCallback<CategoryInfo, Status>) {
         try {
-            const categoryResult = await postgresPool.query(this.getCategoriesQuery, [LOCALE_DEFAULT]);
-            if (categoryResult.rows.length === 0) {
-                callback.onFailure(403, new Status(403, "Get categories failure."))
-                return;
-            }
+            const categoryResult = await postgresPool.query(this.getCategoriesQuery, [locale]);
+            // if (categoryResult.rows.length === 0) {
+            //     callback.onFailure(403, new Status(403, "Get categories failure."))
+            //     return;
+            // }
+            console.log("after get category");
 
-            const subCategoriesResult = await postgresPool.query(this.getSubCategoriesQuery);
+
+            const subCategoriesResult = await postgresPool.query(this.getSubCategoriesQuery, [locale]);
 
             // if (subCategoriesResult.rows.length === 0) {
             //     callback.onFailure(403, new Status(403, "Get categories failure."))
@@ -58,12 +60,19 @@ export class CategoryRepositoryImpl implements CategoryRepository {
                 categories.push(Category.fromObj(data))
             })
 
+            const subCategories: Array<SubCategory> = [];
+
+            subCategoriesResult.rows.forEach(element => {
+                subCategories.push(SubCategory.fromObj(element));
+            });
+
+
             callback.onSuccess(new CategoryInfo(
-                categories, []
+                categories, subCategories
             ));
 
         } catch (err) {
-            callback.onFailure(403, new Status(403, "Get categories failure "+err))
+            callback.onFailure(403, new Status(403, "Get categories failure " + err))
         }
     }
 

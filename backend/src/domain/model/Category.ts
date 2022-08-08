@@ -17,7 +17,7 @@ export class Category {
             obj.name,
             obj.gender,
             obj.description,
-            obj.lang
+            String(obj.lang).trim()
         );
     }
 }
@@ -42,7 +42,7 @@ export class SubCategory {
             obj.category_id,
             obj.name,
             obj.description,
-            obj.lang
+            String(obj.lang).trim()
         );
     }
 };

@@ -11,14 +11,19 @@ export class CategoryController {
 
     getAllCategories = async (req: Request, res: Response) => {
 
-        this.categoryRepo.getAllCategories( {
+        let locale = LOCALE_DEFAULT;
+
+        if (req.query.locale) locale = String(req.query.locale);
+
+
+        this.categoryRepo.getAllCategories(locale, {
             onSuccess(data) {
                 res.status(200).json(new IResponse(data, SUCCESS_STATUS));
             },
             onFailure(code, message) {
                 res.status(code).json(new IResponse(null, message));
             },
-        })
+        });
     }
 
     createCategory = async (req: Request, res: Response) => {
@@ -67,7 +72,7 @@ export class CategoryController {
         if (!subCategory.lang) subCategory.lang = LOCALE_DEFAULT;
 
         console.log('create sub');
-        
+
         this.categoryRepo.createSubCategory(subCategory, {
             onSuccess(data) {
                 res.status(200).json(new IResponse(data, SUCCESS_STATUS))
