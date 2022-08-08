@@ -4,7 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="admin-app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/drawable/custom_background_button.xml" value="0.132" />
+        <entry key="app/src/main/res/drawable/cutom_shape_edittext.xml" value="0.144" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28072916666666664" />
+        <entry key="app/src/main/res/layout/custom_textfield.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/custom_top_app_bar.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.24895833333333334" />
         <entry key="ui-core/src/main/res/drawable/ic_bug_notice.xml" value="0.1205" />
         <entry key="ui-core/src/main/res/layout/activity_crash_notice.xml" value="0.14010416666666667" />
         <entry key="ui-core/src/main/res/layout/restest.xml" value="0.1390625" />

@@ -22,7 +22,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             Log.d("MainActivity login", it.data?.message ?: "null")
         }
 
-
     }
 
     override fun initEvents() {

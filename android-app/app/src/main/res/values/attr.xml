@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TopAppBar">
+        <attr name="setTitle" format="string" />
+    </declare-styleable>
+    <declare-styleable name="RoundCornerWithTitleTextField">
+        <attr name="setShowEndText" format="boolean" />
+        <attr name="setTextFieldLabel" format="string" />
+        <attr name="setTextFieldPasswordToggleEnabled" format="boolean" />
+        <attr name="setEndText" format="string" />
+    </declare-styleable>
+</resources>
