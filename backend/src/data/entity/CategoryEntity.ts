@@ -4,7 +4,6 @@ export class CategoryEntity {
     name: string;
     description: string;
     gender: number;
-    lang: string;
     createdAt?: string;
     updatedAt?: string;
 
@@ -13,12 +12,10 @@ export class CategoryEntity {
         name: string,
         description: string,
         gender: number,
-        lang: string,
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.gender = gender;
-        this.lang = lang
     }
 }

@@ -3,13 +3,11 @@ export class Category {
     name: string;
     gender: number;
     description: string;
-    lang?: string;
-    constructor(id: string, name: string, gender: number, description: string, lang: string) {
+    constructor(id: string, name: string, gender: number, description: string) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.description = description;
-        this.lang = lang;
     }
     static fromObj(obj: any): Category {
         return new Category(
@@ -17,7 +15,6 @@ export class Category {
             obj.name,
             obj.gender,
             obj.description,
-            String(obj.lang).trim()
         );
     }
 }
@@ -27,13 +24,11 @@ export class SubCategory {
     category_id: string;
     name: string;
     description: string;
-    lang?: string;
-    constructor(id: string, category_id: string, name: string, description: string, lang: string) {
+    constructor(id: string, category_id: string, name: string, description: string) {
         this.id = id;
         this.category_id = category_id;
         this.name = name;
         this.description = description;
-        this.lang = lang;
     }
 
     static fromObj(obj: any): SubCategory {
@@ -42,7 +37,6 @@ export class SubCategory {
             obj.category_id,
             obj.name,
             obj.description,
-            String(obj.lang).trim()
         );
     }
 };

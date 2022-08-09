@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import RepositoryModule from '../../../di/RepositoryModule'
-import { LOCALE_DEFAULT } from '../../../domain/const/Locale'
 import { SUCCESS_STATUS } from '../../../domain/const/StatusConst'
 import { Category, SubCategory } from '../../../domain/model/Category'
 import { CategoryRepository } from '../../../domain/repository/CategoryRepository'
@@ -11,12 +10,7 @@ export class CategoryController {
 
     getAllCategories = async (req: Request, res: Response) => {
 
-        let locale = LOCALE_DEFAULT;
-
-        if (req.query.locale) locale = String(req.query.locale);
-
-
-        this.categoryRepo.getAllCategories(locale, {
+        this.categoryRepo.getAllCategories({
             onSuccess(data) {
                 res.status(200).json(new IResponse(data, SUCCESS_STATUS));
             },
@@ -28,8 +22,6 @@ export class CategoryController {
 
     createCategory = async (req: Request, res: Response) => {
         const category = Category.fromObj(req.body);
-
-        if (!category.lang) category.lang = LOCALE_DEFAULT;
 
         this.categoryRepo.createCategory(category, {
             onSuccess(data) {
@@ -43,7 +35,6 @@ export class CategoryController {
 
     updateCategory = async (req: Request, res: Response) => {
         const category = Category.fromObj(req.body);
-        if (!category.lang) category.lang = LOCALE_DEFAULT;
 
         this.categoryRepo.updateCategory(category, {
             onSuccess(data) {
@@ -69,8 +60,6 @@ export class CategoryController {
     createSubCategory = async (req: Request, res: Response) => {
         const subCategory = SubCategory.fromObj(req.body);
 
-        if (!subCategory.lang) subCategory.lang = LOCALE_DEFAULT;
-
         console.log('create sub');
 
         this.categoryRepo.createSubCategory(subCategory, {
@@ -85,7 +74,6 @@ export class CategoryController {
 
     updateSubCategory = async (req: Request, res: Response) => {
         const subCategory = SubCategory.fromObj(req.body);
-        if (!subCategory.lang) subCategory.lang = LOCALE_DEFAULT;
 
         this.categoryRepo.updateSubCategory(subCategory, {
             onSuccess(data) {

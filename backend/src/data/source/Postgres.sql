@@ -1,3 +1,4 @@
+DROP DATABASE theclothez;
 CREATE DATABASE theclothez WITH ENCODING 'UTF8';
 \c theclothez
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -57,6 +58,8 @@ CREATE TABLE USER_ADDRESS(
 CREATE TABLE CATEGORY(
  id uuid DEFAULT uuid_generate_v4(),
  gender int4,
+ name VARCHAR(254),
+ description VARCHAR(254),
  created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
  updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
  PRIMARY KEY(id)
@@ -65,6 +68,8 @@ CREATE TABLE CATEGORY(
 CREATE TABLE SUB_CATEGORY(
     id uuid DEFAULT uuid_generate_v4(),
     category_id uuid NOT NULL,
+    name VARCHAR(254),
+    description VARCHAR(254),
     created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
@@ -73,33 +78,62 @@ CREATE TABLE SUB_CATEGORY(
 	  REFERENCES CATEGORY(id) ON DELETE CASCADE
 );
 
-CREATE TABLE CATEGORY_DESC(
+CREATE TABLE PRODUCT(
     id uuid DEFAULT uuid_generate_v4(),
-    category_id uuid NOT NULL,
-    name VARCHAR(254),
-    lang CHAR(10),
-    description VARCHAR(254),
+    name VARCHAR,
+    description VARCHAR,
+    product_code VARCHAR(254),
+    form VARCHAR,
+    material VARCHAR,
+    unit VARCHAR(254),
+    quantity_per_unit VARCHAR,
+    price decimal DEFAULT 0,
+    unit_price VARCHAR(100),
+    sub_category_id uuid,
     created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY(id),
-       CONSTRAINT fk_category
-      FOREIGN KEY(category_id) 
-	  REFERENCES CATEGORY(id) ON DELETE CASCADE
-);
-
-CREATE TABLE SUB_CATEGORY_DESC(
-    id uuid DEFAULT uuid_generate_v4(),
-    sub_category_id uuid NOT NULL,
-    name VARCHAR(254),
-    lang CHAR(10),
-    description VARCHAR(254),
-    created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY(id),
-       CONSTRAINT fk_sub_category
+    PRIMARY KEY(id),
+    CONSTRAINT fk_category
       FOREIGN KEY(sub_category_id) 
 	  REFERENCES SUB_CATEGORY(id) ON DELETE CASCADE
 );
+
+CREATE TABLE PRODUCT_COLOR(
+    id uuid DEFAULT uuid_generate_v4(),
+    product_id uuid,
+    name VARCHAR(254),
+    description VARCHAR,
+    color_hex VARCHAR(20),
+    created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_product
+      FOREIGN KEY(product_id) 
+	  REFERENCES PRODUCT(id) ON DELETE CASCADE
+);
+
+CREATE TABLE SIZE_INFO(
+    id uuid DEFAULT uuid_generate_v4(),
+    color_id uuid,
+    size VARCHAR(50),
+    product_amount decimal,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_color
+      FOREIGN KEY(color_id) 
+	  REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE    
+);
+
+CREATE TABLE PRODUCT_COLOR_IMG(
+    id uuid DEFAULT uuid_generate_v4(),
+    color_id uuid,
+    url VARCHAR,
+    description VARCHAR,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_color
+      FOREIGN KEY(color_id) 
+	  REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE
+);
+
 
 -- init data
 INSERT INTO PERMISSION(permission_type,description) VAlUES (0,'Normal user');
