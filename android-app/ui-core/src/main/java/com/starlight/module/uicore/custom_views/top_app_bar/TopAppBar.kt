@@ -1,11 +1,12 @@
-package com.starlight.app.theclothez.custom_views.top_app_bar
+package com.starlight.module.uicore.custom_views.top_app_bar
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.starlight.app.theclothez.R
+import com.starlight.module.resource.R
+import com.starlight.module.uicore.utils.setPreventDoubleClick
 
 class TopAppBar @JvmOverloads constructor(
     private val ctx: Context,
@@ -39,7 +40,7 @@ class TopAppBar @JvmOverloads constructor(
     }
 
     override fun initEvents() {
-        btnBack.setOnClickListener {
+        btnBack.setPreventDoubleClick {
             onBackButtonTapped?.invoke()
         }
     }

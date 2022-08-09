@@ -1,4 +1,4 @@
-package com.starlight.app.theclothez.custom_views.top_app_bar
+package com.starlight.module.uicore.custom_views.top_app_bar
 
 import android.content.Context
 import android.view.LayoutInflater

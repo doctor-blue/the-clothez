@@ -1,4 +1,4 @@
-package com.starlight.app.theclothez.custom_views.text_field
+package com.starlight.module.uicore.custom_views.text_field
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,8 +9,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_NONE
 import com.google.android.material.textfield.TextInputLayout.END_ICON_PASSWORD_TOGGLE
-import com.starlight.app.theclothez.R
-import com.starlight.app.theclothez.custom_views.top_app_bar.CustomViewStyle
+import com.starlight.module.resource.R
+import com.starlight.module.uicore.custom_views.top_app_bar.CustomViewStyle
+import com.starlight.module.uicore.utils.setPreventDoubleClick
 
 class RoundCornerWithTitleTextField @JvmOverloads constructor(
     private val ctx: Context,
@@ -114,7 +115,7 @@ class RoundCornerWithTitleTextField @JvmOverloads constructor(
     }
 
     override fun initEvents() {
-        tvTextFieldEnd.setOnClickListener {
+        tvTextFieldEnd.setPreventDoubleClick {
             onTextViewOnclick?.invoke()
         }
     }

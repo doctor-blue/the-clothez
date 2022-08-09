@@ -5,13 +5,14 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.asLiveData
 import com.starlight.app.theclothez.auth.AuthenticationViewModel
-import com.starlight.app.theclothez.databinding.ActivityMainBinding
 import com.starlight.module.uicore.BaseActivity
-import com.starlight.module.uicore.utils.setPreventDoubleClick
+import com.starlight.module.uicore.R
+import com.starlight.module.uicore.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity :
+    BaseActivity<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val authViewModel: AuthenticationViewModel by viewModels()
 
@@ -27,9 +28,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun initEvents() {
         super.initEvents()
         binding {
-            btnTest.setPreventDoubleClick {
-                authViewModel.login("vantan.nguyen0726@gmail.com", "nao123456")
-            }
+//            btnTest.setPreventDoubleClick {
+//                authViewModel.login("vantan.nguyen0726@gmail.com", "nao123456")
+//            }
         }
     }
 }
