@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="btn_login">Next</string>
+    <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
+    <string name="oh_snap">Ôi hỏng!</string>
+    <string name="detail">Chi tiết</string>
 </resources>
