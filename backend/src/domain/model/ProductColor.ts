@@ -25,5 +25,23 @@ export class ProductColor {
         this.resources = resources;
     }
 
- 
+    static fromObj(obj: any): ProductColor {
+        const sizes = obj.sizes.map((value: any, index: number) => {
+            return ProductSize.fromObj(value);
+        });
+        const resources = obj.resources.map((value: any, index: number) => {
+            return ProductColorRes.fromObj(value);
+        });
+
+        return new ProductColor(
+            obj.color_id,
+            obj.name,
+            obj.description,
+            obj.hex,
+            sizes,
+            resources
+        )
+    }
+
+
 }

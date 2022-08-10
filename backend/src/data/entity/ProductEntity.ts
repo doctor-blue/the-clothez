@@ -1,18 +1,18 @@
-import { ProductColor } from "./ProductColor";
-
-export class Product {
-    product_id: string;
+export class ProductEntity {
+    id: string;
     name: string;
     description: string;
-    product_code: string;
     form: string;
     material: string;
     unit: string;
+    product_code: string;
     quantity_per_unit: number;
     price: number;
     unit_price: string;
     sub_category_id: string;
-    colors: Array<ProductColor>
+    created_at: string;
+    updated_at: string
+
 
     constructor(
         product_id: string,
@@ -26,9 +26,10 @@ export class Product {
         price: number,
         unit_price: string,
         sub_category_id: string,
-        colors: Array<ProductColor>
+        created_at: string,
+        updated_at: string,
     ) {
-        this.product_id = product_id;
+        this.id = product_id;
         this.name = name;
         this.description = description;
         this.product_code = product_code;
@@ -39,28 +40,9 @@ export class Product {
         this.price = price;
         this.unit_price = unit_price;
         this.sub_category_id = sub_category_id;
-        this.colors = colors;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
-    static fromObj(obj: any): Product {
-        const colors = obj.colors.map((value: any, index: number) => {
-            return ProductColor.fromObj(value);
-        });
-        return new Product(
-            obj.product_id,
-            obj.name,
-            obj.description,
-            obj.product_code,
-            obj.form,
-            obj.material,
-            obj.unit,
-            obj.quantity_per_unit,
-            obj.price,
-            obj.unit_price,
-            obj.sub_category_id,
-            colors
-        )
-    }
 
 }
-

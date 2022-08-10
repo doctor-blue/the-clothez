@@ -86,7 +86,7 @@ CREATE TABLE PRODUCT(
     form VARCHAR,
     material VARCHAR,
     unit VARCHAR(254),
-    quantity_per_unit VARCHAR,
+    quantity_per_unit decimal,
     price decimal DEFAULT 0,
     unit_price VARCHAR(100),
     sub_category_id uuid,
