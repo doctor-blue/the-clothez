@@ -112,7 +112,7 @@ CREATE TABLE PRODUCT_COLOR(
 	  REFERENCES PRODUCT(id) ON DELETE CASCADE
 );
 
-CREATE TABLE SIZE_INFO(
+CREATE TABLE PRODUCT_SIZE_INFO(
     id uuid DEFAULT uuid_generate_v4(),
     color_id uuid,
     size VARCHAR(50),
@@ -123,11 +123,13 @@ CREATE TABLE SIZE_INFO(
 	  REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE    
 );
 
-CREATE TABLE PRODUCT_COLOR_IMG(
+CREATE TABLE PRODUCT_COLOR_RES(
     id uuid DEFAULT uuid_generate_v4(),
     color_id uuid,
     url VARCHAR,
     description VARCHAR,
+    mine_type int4 DEFAULT 0,
+    res_type int4 DEFAULT 0,
     PRIMARY KEY(id),
     CONSTRAINT fk_color
       FOREIGN KEY(color_id) 
