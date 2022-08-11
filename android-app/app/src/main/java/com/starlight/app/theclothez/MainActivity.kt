@@ -7,12 +7,12 @@ import androidx.lifecycle.asLiveData
 import com.starlight.app.theclothez.auth.AuthenticationViewModel
 import com.starlight.module.uicore.BaseActivity
 import com.starlight.module.uicore.R
-import com.starlight.module.uicore.databinding.FragmentLoginBinding
+import com.starlight.module.uicore.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity :
-    BaseActivity<FragmentLoginBinding>(R.layout.fragment_login) {
+    BaseActivity<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
 
     private val authViewModel: AuthenticationViewModel by viewModels()
 
