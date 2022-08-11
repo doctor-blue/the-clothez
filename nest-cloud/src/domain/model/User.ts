@@ -9,7 +9,7 @@ export default class User {
     gender: number;
     is_active: boolean;
     dob: string;
-    permission_id: string;
+    permission_id: number;
 
     constructor(user_id: string,
         first_name: string,
@@ -21,7 +21,7 @@ export default class User {
         gender: number,
         is_active: boolean,
         dob: string,
-        permission_id: string) {
+        permission_id: number) {
 
         this.user_id = user_id;
         this.first_name = first_name;
@@ -36,7 +36,7 @@ export default class User {
         this.gender = gender;
     }
 
-    static fromObj(obj: any): User {        
+    static fromObj(obj: any): User {
         return new User(
             obj.user_id,
             obj.first_name,

@@ -42,40 +42,40 @@ export class UserEntity implements Entity {
     @Column({ nullable: true })
     dob?: Date;
     @Column({ nullable: true })
-    permission_id: string;
+    permission_id: number;
 
     @ManyToOne(() => PermissionEntity, (permission: PermissionEntity) => permission.permission_id)
     permission: PermissionEntity
 
 
-    // constructor(user_id: string,
-    //     first_name: string,
-    //     last_name: string,
-    //     user_name: string,
-    //     email: string,
-    //     phone_number: string,
-    //     password: string,
-    //     created_at: string,
-    //     updated_at: string,
-    //     avartar: string,
-    //     gender: number,
-    //     is_active: boolean,
-    //     dob: string,
-    //     permissionId: string) {
+    constructor(user_id: string,
+        first_name: string,
+        last_name: string,
+        user_name: string,
+        email: string,
+        phone_number: string,
+        password: string,
+        created_at: string,
+        updated_at: string,
+        avartar: string,
+        gender: number,
+        is_active: boolean,
+        dob: string,
+        permissionId: number) {
 
-    //     this.user_id = user_id;
-    //     this.first_name = first_name;
-    //     this.last_name = last_name;
-    //     this.user_name = user_name;
-    //     this.email = email;
-    //     this.phone_number = phone_number;
-    //     this.password = password;
-    //     this.created_at = created_at;
-    //     this.updated_at = updated_at;
-    //     this.avatar = avartar;
-    //     this.is_active = is_active;
-    //     this.dob = dob;
-    //     this.permission_id = permissionId;
-    //     this.gender = gender;
-    // }
+        this.user_id = user_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.user_name = user_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.password = password;
+        this.created_at = new Date(created_at);
+        this.updated_at = new Date(updated_at);
+        this.avatar = avartar;
+        this.is_active = is_active;
+        this.dob = new Date(dob);
+        this.permission_id = permissionId;
+        this.gender = gender;
+    }
 }

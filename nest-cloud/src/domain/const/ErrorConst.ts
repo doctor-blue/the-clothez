@@ -6,5 +6,6 @@ export const AUTHENTICATION_FAILURE = new Status(103, "Authentication failure.")
 export const INCORRECT_USER_NAME_PWD = new Status(104, "Incorrect user name or password.");
 export const EMAIL_DOES_NOT_CORRECT = new Status(105, "Email does not correct.")
 export const UNKNOWN_ERR = new Status(106,"Unknown err");
+export const REFRESH_TOKEN_FAILURE = new Status(107, "Refresh token failure.")
 
 

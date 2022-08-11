@@ -1,6 +1,6 @@
 import User from "../../domain/model/User";
 
-export class SignUpRequest {
+export class RegisterDto {
     user_info: User;
     password: string;
 
@@ -9,8 +9,8 @@ export class SignUpRequest {
         this.password = password;
     }
 
-    static fromObj(obj: any): SignUpRequest {
-        return new SignUpRequest(
+    static fromObj(obj: any): RegisterDto {
+        return new RegisterDto(
             User.fromObj(obj.user_info),
             obj.password,
         )
