@@ -1,3 +1,4 @@
+import { currentTime } from 'src/domain/utils/Time';
 import {
     Entity,
     Column,
@@ -5,9 +6,10 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm'
+import { IEntity } from './IEntity';
 import { PermissionEntity } from './PermissionEntity';
 @Entity("users")
-export class UserEntity implements Entity {
+export class UserEntity implements IEntity {
     @PrimaryGeneratedColumn("uuid")
     user_id: string;
     @Column()
@@ -29,9 +31,16 @@ export class UserEntity implements Entity {
         length: 254
     })
     password: string;
-    @Column({ nullable: true })
+    @Column({
+        nullable: true,
+        default: currentTime()
+    })
     created_at: Date;
-    @Column({ nullable: true })
+
+    @Column({
+        nullable: true,
+        default: currentTime()
+    })
     updated_at: Date;
     @Column()
     avatar: string;

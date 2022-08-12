@@ -1,3 +1,4 @@
+import { CategoryMapper } from "src/data/mappers/CategoryMapper";
 import { UserMapper } from "src/data/mappers/UserMapper";
 import User from "src/domain/model/User";
 
@@ -14,6 +15,10 @@ export default class MapperModule {
 
     provideUserMapper(): UserMapper {
         return new UserMapper();
+    }
+
+    provideCategoryMapper():CategoryMapper{
+        return new CategoryMapper()
     }
 
 }
