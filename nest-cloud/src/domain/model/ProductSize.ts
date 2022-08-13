@@ -1,22 +1,22 @@
 export class ProductSize {
-    size_id: string;
-    color_id: string;
+    sizeId: string;
+    colorId: string;
     size: string;
-    product_amount: number;
+    productAmount: number;
 
-    constructor(size_id: string, color_id: string, size: string, product_amount: number) {
-        this.size_id = size_id;
-        this.color_id = color_id;
+    constructor(sizeId: string, colorId: string, size: string, productAmount: number) {
+        this.sizeId = sizeId;
+        this.colorId = colorId;
         this.size = size;
-        this.product_amount = product_amount;
+        this.productAmount = productAmount;
     }
 
     static fromObj(obj: any): ProductSize {
         return new ProductSize(
-            obj.size_id,
-            obj.color_id,
+            obj.sizeId,
+            obj.colorId,
             obj.size,
-            obj.product_amount
+            obj.productAmount
         )
     }
 }

@@ -1,44 +1,44 @@
 import { ProductColor } from "./ProductColor";
 
 export class Product {
-    product_id: string;
+    productId: string;
     name: string;
     description: string;
-    product_code: string;
+    productCode: string;
     form: string;
     material: string;
     unit: string;
-    quantity_per_unit: number;
+    quantityPerUnit: number;
     price: number;
-    unit_price: string;
-    sub_category_id: string;
+    unitPrice: string;
+    subCategoryId: string;
     colors: Array<ProductColor>
 
     constructor(
-        product_id: string,
+        productId: string,
         name: string,
         description: string,
-        product_code: string,
+        productCode: string,
         form: string,
         material: string,
         unit: string,
-        quantity_per_unit: number,
+        quantityPerUnit: number,
         price: number,
-        unit_price: string,
-        sub_category_id: string,
+        unitPrice: string,
+        subCategoryId: string,
         colors: Array<ProductColor>
     ) {
-        this.product_id = product_id;
+        this.productId = productId;
         this.name = name;
         this.description = description;
-        this.product_code = product_code;
+        this.productCode = productCode;
         this.form = form;
         this.material = material;
         this.unit = unit;
-        this.quantity_per_unit = quantity_per_unit;
+        this.quantityPerUnit = quantityPerUnit;
         this.price = price;
-        this.unit_price = unit_price;
-        this.sub_category_id = sub_category_id;
+        this.unitPrice = unitPrice;
+        this.subCategoryId = subCategoryId;
         this.colors = colors;
     }
 
@@ -47,17 +47,17 @@ export class Product {
             return ProductColor.fromObj(value);
         });
         return new Product(
-            obj.product_id,
+            obj.productId,
             obj.name,
             obj.description,
-            obj.product_code,
+            obj.productCode,
             obj.form,
             obj.material,
             obj.unit,
-            obj.quantity_per_unit,
+            obj.quantityPerUnit,
             obj.price,
-            obj.unit_price,
-            obj.sub_category_id,
+            obj.unitPrice,
+            obj.subCategoryId,
             colors
         )
     }

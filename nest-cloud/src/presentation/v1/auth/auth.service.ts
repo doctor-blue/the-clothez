@@ -6,7 +6,7 @@ import { IResponse } from 'src/presentation/response/IResponse';
 import { UserEntity } from 'src/data/entity/UserEntity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { AUTHENTICATION_FAILURE, EMAIL_ALREADY_EXISTS, INCORRECT_USER_NAME_PWD, REFRESH_TOKEN_FAILURE } from 'src/domain/const/ErrorConst';
+import { AUTHENTICATION_FAILURE, EMAIL_ALREADY_EXISTS, INCORRECT_USER_NAME_PWD, INVALID_USER_INFO, REFRESH_TOKEN_FAILURE } from 'src/domain/const/ErrorConst';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from 'src/presentation/dto/RegisterDto';
 import { SUCCESS_STATUS } from 'src/domain/const/StatusConst';
@@ -31,12 +31,20 @@ export class AuthService {
     ) { }
 
 
-    async login(userName: string, password: string) {
+    async login(userName: string, password: string): Promise<IResponse<Token>> {
+
+        if (!userName ||
+            !password)
+            throw new UnauthorizedException(INVALID_USER_INFO.toJson());
+
 
         const user = await this.validateUser(userName, password);
         const payload = { user_name: user.email, user_id: user.user_id };
 
-        return new Token(this.jwtService.sign(payload), jwtWebToken(payload.user_id, payload.user_name));
+        return new IResponse(
+            new Token(this.jwtService.sign(payload), jwtWebToken(payload.user_id, payload.user_name)),
+            SUCCESS_STATUS
+        );
     }
 
     async validateUser(userName: string, password: string): Promise<UserEntity> {
@@ -53,13 +61,21 @@ export class AuthService {
     }
 
     async register(registerDto: RegisterDto): Promise<IResponse<boolean>> {
+
+        if (!registerDto.user_info.email ||
+            !registerDto.user_info.userName ||
+            !registerDto.user_info.gender ||
+            !registerDto.password)
+            throw new UnauthorizedException(INVALID_USER_INFO.toJson());
+
+
         const users = await this.userRepository.find({
             where: [
                 {
                     email: registerDto.user_info.email
                 },
                 {
-                    user_name: registerDto.user_info.user_name
+                    user_name: registerDto.user_info.userName
                 }
             ]
         });
@@ -74,15 +90,15 @@ export class AuthService {
         const newUser = await this.userRepository.createQueryBuilder()
             .insert().into(UserEntity).values([
                 {
-                    first_name: userInfo.first_name,
-                    last_name: userInfo.last_name,
-                    user_name: userInfo.user_name,
+                    first_name: userInfo.firstName,
+                    last_name: userInfo.lastName,
+                    user_name: userInfo.userName,
                     email: userInfo.email,
                     dob: userInfo.dob,
                     permission_id: 1,
                     password: hashedPassword,
                     avatar: userInfo.avatar,
-                    phone_number: userInfo.phone_number,
+                    phone_number: userInfo.phoneNumber,
                     is_active: true,
                     gender: userInfo.gender
                 }
@@ -96,6 +112,8 @@ export class AuthService {
     }
 
     async refreshToken(refreshToken: string, callback: StateCallback<Token, Status>) {
+        if (!refreshToken)
+            callback.onFailure(401, REFRESH_TOKEN_FAILURE);
 
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (error: any, user: any) => {
             if (error) {

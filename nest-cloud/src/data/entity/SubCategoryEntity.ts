@@ -1,8 +1,9 @@
 import { Category } from "src/domain/model/Category";
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CategoryEntity } from "./CategoryEntity";
 import { IEntity } from "./IEntity";
+import { ProductEntity } from "./ProductEntity";
 
 @Entity("sub_category")
 export class SubCategoryEntity implements IEntity {
@@ -43,6 +44,9 @@ export class SubCategoryEntity implements IEntity {
         (category: CategoryEntity) =>
             category.subCategories)
     category: CategoryEntity
+
+    @OneToMany(() => ProductEntity, (product: ProductEntity) => product.subCategory)
+    products: ProductEntity[]
 
     constructor(
         id: string,

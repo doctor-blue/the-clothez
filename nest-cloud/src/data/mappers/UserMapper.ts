@@ -20,20 +20,20 @@ export class UserMapper implements DomainMapper<User, UserEntity>{
     }
     fromDomain(domain: User): UserEntity {
         return new UserEntity(
-            domain.user_id,
-            domain.first_name,
-            domain.last_name,
-            domain.user_name,
+            domain.userId,
+            domain.firstName,
+            domain.lastName,
+            domain.userName,
             domain.email,
-            domain.phone_number,
+            domain.phoneNumber,
             "",
             "",
             "",
             domain.avatar,
             domain.gender,
-            domain.is_active,
+            domain.isActive,
             domain.dob,
-            domain.permission_id
+            domain.permissionId
         )
     }
 }

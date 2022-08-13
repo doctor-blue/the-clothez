@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from 'src/data/entity/CategoryEntity';
 import { SubCategoryEntity } from 'src/data/entity/SubCategoryEntity';
 import MapperModule from 'src/di/MapperModule';
-import { CREATE_CATEGORY_FAILURE, DELETE_CATEGORY_FAILURE } from 'src/domain/const/ErrorConst';
+import { CREATE_CATEGORY_FAILURE, DELETE_CATEGORY_FAILURE, INVALID_CATEGORY_INFO } from 'src/domain/const/ErrorConst';
 import { SUCCESS_STATUS } from 'src/domain/const/StatusConst';
 import { Category, SubCategory } from 'src/domain/model/Category';
 import { currentTime } from 'src/domain/utils/Time';
@@ -26,6 +26,13 @@ export class CategoryService {
     private subCategoryMapper = MapperModule.getInstance().provideSubCategoryMapper();
 
     async cretateCategory(category: Category): Promise<IResponse<string>> {
+
+        if (
+            !category.gender ||
+            !category.name
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
+
         const result = await this.categoryRepo.createQueryBuilder().insert().into(CategoryEntity).values([
             {
                 gender: category.gender,
@@ -42,7 +49,12 @@ export class CategoryService {
     }
 
     async updateCategory(category: Category): Promise<IResponse<boolean>> {
-        console.log(category);
+        if (
+            !category.id ||
+            !category.name ||
+            !category.description
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
         const result = await this.categoryRepo.createQueryBuilder()
             .update(CategoryEntity).set({
@@ -60,7 +72,10 @@ export class CategoryService {
     }
 
     async deleteCategory(categoryId: string): Promise<IResponse<boolean>> {
-
+        if (
+            !categoryId
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
         const result = await this.categoryRepo.delete({
             id: categoryId
         });
@@ -74,11 +89,18 @@ export class CategoryService {
     }
 
     async cretateSubCategory(subCategory: SubCategory): Promise<IResponse<string>> {
+
+        if (
+            !subCategory.categoryId ||
+            !subCategory.name
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
+
         const result = await this.categoryRepo.createQueryBuilder().insert().into(SubCategoryEntity).values([
             {
                 name: subCategory.name,
                 description: subCategory.description,
-                category_id: subCategory.category_id
+                category_id: subCategory.categoryId
             }
         ]).returning("id").execute()
 
@@ -90,6 +112,12 @@ export class CategoryService {
     }
 
     async updateSubCategory(subCategory: SubCategory): Promise<IResponse<boolean>> {
+        if (
+            !subCategory.id ||
+            !subCategory.name ||
+            !subCategory.description
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
         const result = await this.categoryRepo.createQueryBuilder()
             .update(SubCategoryEntity).set({
@@ -105,7 +133,11 @@ export class CategoryService {
     }
 
     async deleteSubCategory(subCategoryId: string): Promise<IResponse<boolean>> {
-
+        if (
+            subCategoryId
+        )
+            throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
+            
         const result = await this.subCategoryRepo.delete({
             id: subCategoryId
         });
@@ -126,8 +158,8 @@ export class CategoryService {
             return this.categoryMapper.toDomain(entity);
         });
 
-        
-        const subCategories = await (await this.subCategoryRepo.find()).map((subCategory:SubCategoryEntity)=> this.subCategoryMapper.toDomain(subCategory));
+
+        const subCategories = await (await this.subCategoryRepo.find()).map((subCategory: SubCategoryEntity) => this.subCategoryMapper.toDomain(subCategory));
 
         const response = new IResponse<CategoryDto>(
             new CategoryDto(categories, subCategories),

@@ -14,7 +14,7 @@ export class SubCategoryMapper implements DomainMapper<SubCategory, SubCategoryE
     fromDomain(domain: SubCategory): SubCategoryEntity {
         return new SubCategoryEntity(
             domain.id,
-            domain.category_id,
+            domain.categoryId,
             domain.name,
             domain.description
         )

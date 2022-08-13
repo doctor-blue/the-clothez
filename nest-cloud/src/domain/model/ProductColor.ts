@@ -2,7 +2,8 @@ import { ProductColorRes } from "./ProductColorRes";
 import { ProductSize } from "./ProductSize";
 
 export class ProductColor {
-    color_id: string;
+    colorId: string;
+    productId:string;
     name: string;
     description: string;
     hex: string;
@@ -10,14 +11,16 @@ export class ProductColor {
     resources: Array<ProductColorRes>
 
     constructor(
-        color_id: string,
+        colorId: string,
+        productId:string,
         name: string,
         description: string,
         hex: string,
         sizes: Array<ProductSize>,
         resources: Array<ProductColorRes>
     ) {
-        this.color_id = color_id;
+        this.colorId = colorId;
+        this.productId = productId;
         this.name = name;
         this.description = description;
         this.hex = hex;
@@ -34,7 +37,8 @@ export class ProductColor {
         });
 
         return new ProductColor(
-            obj.color_id,
+            obj.colorId,
+            obj.productId,
             obj.name,
             obj.description,
             obj.hex,

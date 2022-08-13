@@ -21,12 +21,12 @@ export class Category {
 
 export class SubCategory {
     id: string;
-    category_id: string;
+    categoryId: string;
     name: string;
     description: string;
-    constructor(id: string, category_id: string, name: string, description: string) {
+    constructor(id: string, categoryId: string, name: string, description: string) {
         this.id = id;
-        this.category_id = category_id;
+        this.categoryId = categoryId;
         this.name = name;
         this.description = description;
     }
@@ -34,7 +34,7 @@ export class SubCategory {
     static fromObj(obj: any): SubCategory {
         return new SubCategory(
             obj.id,
-            obj.category_id,
+            obj.categoryId,
             obj.name,
             obj.description,
         );

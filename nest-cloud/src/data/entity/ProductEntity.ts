@@ -1,17 +1,77 @@
-export class ProductEntity {
+import { currentTime } from "src/domain/utils/Time";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IEntity } from "./IEntity";
+import { ProductColorEntity } from "./ProductColorEntity";
+import { SubCategoryEntity } from "./SubCategoryEntity";
+
+@Entity("product")
+export class ProductEntity implements IEntity {
+    @PrimaryGeneratedColumn('uuid')
     id: string;
+    @Column({
+        nullable: true
+    })
     name: string;
+    @Column({
+        nullable: true
+    })
     description: string;
+    @Column({
+        nullable: true
+    })
     form: string;
+    @Column({
+        nullable: true
+    })
     material: string;
+    @Column({
+        nullable: true,
+        length: 254
+    })
     unit: string;
+    @Column({
+        nullable: true,
+        length: 254
+    })
     product_code: string;
+    @Column({
+        nullable: true
+    })
     quantity_per_unit: number;
+    @Column({
+        nullable: true,
+        default: 0
+    })
     price: number;
+    @Column({
+        nullable: true,
+        length: 100
+    })
     unit_price: string;
+    @Column({
+        nullable: true
+    })
     sub_category_id: string;
-    created_at: string;
-    updated_at: string
+
+    @Column({
+        nullable: true,
+        default: currentTime()
+    })
+    created_at: Date;
+    @Column({
+        nullable: true,
+        default: currentTime()
+    })
+    updated_at: Date;
+
+    @ManyToOne(() => SubCategoryEntity, (subCate) => subCate.products)
+    subCategory: SubCategoryEntity
+
+    @OneToMany(
+        () => ProductColorEntity,
+        (color) => color.product
+    )
+    colors: ProductColorEntity[]
 
 
     constructor(
@@ -26,8 +86,8 @@ export class ProductEntity {
         price: number,
         unit_price: string,
         sub_category_id: string,
-        created_at: string,
-        updated_at: string,
+        created_at: Date,
+        updated_at: Date,
     ) {
         this.id = product_id;
         this.name = name;

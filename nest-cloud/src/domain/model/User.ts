@@ -1,54 +1,54 @@
 export default class User {
-    user_id: string;
-    first_name: string;
-    last_name: string;
-    user_name: string;
+    userId: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
     email: string;
-    phone_number: string;
+    phoneNumber: string;
     avatar: string;
     gender: number;
-    is_active: boolean;
+    isActive: boolean;
     dob: string;
-    permission_id: number;
+    permissionId: number;
 
-    constructor(user_id: string,
-        first_name: string,
-        last_name: string,
-        user_name: string,
+    constructor(userId: string,
+        firstName: string,
+        lastName: string,
+        userName: string,
         email: string,
-        phone_number: string,
+        phoneNumber: string,
         avatar: string,
         gender: number,
-        is_active: boolean,
+        isActive: boolean,
         dob: string,
-        permission_id: number) {
+        permissionId: number) {
 
-        this.user_id = user_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.user_name = user_name;
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
         this.email = email;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.avatar = avatar;
-        this.is_active = is_active;
+        this.isActive = isActive;
         this.dob = dob;
-        this.permission_id = permission_id;
+        this.permissionId = permissionId;
         this.gender = gender;
     }
 
     static fromObj(obj: any): User {
         return new User(
-            obj.user_id,
-            obj.first_name,
-            obj.last_name,
-            obj.user_name,
+            obj.userId,
+            obj.firstName,
+            obj.lastName,
+            obj.userName,
             obj.email,
-            obj.phone_number,
+            obj.phoneNumber,
             obj.avatar,
             obj.gender,
-            obj.is_active,
+            obj.isActive,
             obj.dob,
-            obj.permission_id
+            obj.permissionId
         )
     }
 
