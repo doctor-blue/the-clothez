@@ -1,5 +1,5 @@
 import { Body, Catch, Controller, Delete, Get, Param, Post, Put, UseFilters, UseGuards } from '@nestjs/common';
-import { Category } from 'src/domain/model/Category';
+import { Category, SubCategory } from 'src/domain/model/Category';
 import { HttpExceptionFilter } from 'src/presentation/exception.filter';
 import { JwtAuthGuard } from '../auth/local.authguard';
 import { v1Path } from '../path';
@@ -44,28 +44,36 @@ export class CategoryController {
     @UseFilters(HttpExceptionFilter)
     @UseGuards(JwtAuthGuard)
     async getCategory() {
-
+        return await this.categoryService.getCategory();
     }
 
     @Post('sub')
     @UseGuards(JwtAuthGuard)
     @UseFilters(HttpExceptionFilter)
-    async createSubCategory() {
-
+    async createSubCategory(
+        @Body() subCategory: SubCategory
+    ) {
+        return await this.categoryService.cretateSubCategory(subCategory);
     }
 
-    @Delete('sub')
+    @Delete('sub/:id')
     @UseFilters(HttpExceptionFilter)
     @UseGuards(JwtAuthGuard)
-    async deleteSubCategory() {
-
+    async deleteSubCategory(
+        @Param("id")
+        categoryId: string
+    ) {
+        return await this.categoryService.deleteSubCategory(categoryId);
     }
 
     @Put('sub')
     @UseFilters(HttpExceptionFilter)
     @UseGuards(JwtAuthGuard)
-    async updateSubCategory() {
-
+    async updateSubCategory(
+        @Body()
+        subCategory: SubCategory
+    ) {
+        return await this.categoryService.updateSubCategory(subCategory);
     }
 
 

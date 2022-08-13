@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpStatus, Post, Req, Res, UseFilters, UseGuards } from "@nestjs/common";
 import { HttpExceptionFilter } from "src/presentation/exception.filter";
-import { LoginDto } from "src/presentation/request/LoginDto";
-import { RefreshTokenDto } from "src/presentation/request/RefreshTokenDto";
-import { RegisterDto } from "src/presentation/request/RegisterDto";
+import { LoginDto } from "src/presentation/dto/LoginDto";
+import { RefreshTokenDto } from "src/presentation/dto/RefreshTokenDto";
+import { RegisterDto } from "src/presentation/dto/RegisterDto";
 import { IResponse } from "src/presentation/response/IResponse";
 import { v1Path } from "../path";
 import { AuthService } from "./auth.service";

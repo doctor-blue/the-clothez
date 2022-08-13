@@ -10,7 +10,9 @@ export class SubCategoryEntity implements IEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     category_id: string;
 
     @Column({
@@ -18,9 +20,6 @@ export class SubCategoryEntity implements IEntity {
         nullable: true
     })
     name: string;
-
-    @Column()
-    gender: number;
 
     @Column({
         length: 254,
@@ -50,13 +49,11 @@ export class SubCategoryEntity implements IEntity {
         category_id: string,
         name: string,
         description: string,
-        gender: number,
     ) {
         this.id = id;
         this.category_id = category_id;
         this.description = description;
         this.name = name;
-        this.gender = gender;
     }
 
 }

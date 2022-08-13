@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { AUTHENTICATION_FAILURE, EMAIL_ALREADY_EXISTS, INCORRECT_USER_NAME_PWD, REFRESH_TOKEN_FAILURE } from 'src/domain/const/ErrorConst';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterDto } from 'src/presentation/request/RegisterDto';
+import { RegisterDto } from 'src/presentation/dto/RegisterDto';
 import { SUCCESS_STATUS } from 'src/domain/const/StatusConst';
 import MapperModule from 'src/di/MapperModule';
 import * as jwt from 'jsonwebtoken';
