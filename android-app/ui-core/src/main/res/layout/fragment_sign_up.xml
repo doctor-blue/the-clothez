@@ -24,7 +24,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setTitle="Sign Up" />
+                app:setTitle="@string/sign_up" />
 
             <LinearLayout
                 android:id="@+id/img_avatar"
@@ -54,7 +54,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_avatar"
-                app:setTextFieldLabel="Name" />
+                app:setTextFieldLabel="@string/name" />
 
             <com.starlight.module.uicore.custom_views.text_field.RoundCornerWithTitleTextField
                 android:id="@+id/txt_email"
@@ -65,7 +65,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_name"
                 app:setShowEndText="false"
-                app:setTextFieldLabel="Email" />
+                app:setTextFieldLabel="@string/email" />
 
             <com.starlight.module.uicore.custom_views.text_field.RoundCornerWithTitleTextField
                 android:id="@+id/txt_password"
@@ -75,7 +75,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_email"
-                app:setTextFieldLabel="Password"
+                app:setTextFieldLabel="@string/password"
                 app:setTextFieldPasswordToggleEnabled="true" />
 
             <com.starlight.module.uicore.custom_views.text_field.RoundCornerWithTitleTextField
@@ -86,7 +86,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_password"
-                app:setTextFieldLabel="Repeat Password"
+                app:setTextFieldLabel="@string/repeat_password"
                 app:setTextFieldPasswordToggleEnabled="true" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -118,7 +118,7 @@
                     android:id="@+id/lb_have_an_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I have an account. "
+                    android:text="@string/have_account"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/navy_light" />
 
@@ -126,7 +126,7 @@
                     android:id="@+id/lb_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Log In"
+                    android:text="@string/login"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/navy" />
 

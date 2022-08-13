@@ -4,4 +4,13 @@
     <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
     <string name="oh_snap">Ôi hỏng!</string>
     <string name="detail">Chi tiết</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="name">Tên</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="repeat_password">Xác nhận mật khẩu</string>
+    <string name="have_account">Tôi đã có tài khoản. </string>
+    <string name="login">Đăng nhập</string>
+    <string name="hello">Xin chào! </string>
+    <string name="hello_greeting">Hãy khơi nguồn cảm hứng và khám phá những điều mới mẻ để làm mới tủ quần áo của bạn</string>
 </resources>
