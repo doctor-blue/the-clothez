@@ -1,22 +1,19 @@
 export class ProductSize {
     sizeId: string;
-    colorId: string;
+    productId: string;
     size: string;
-    productAmount: number;
 
-    constructor(sizeId: string, colorId: string, size: string, productAmount: number) {
+    constructor(sizeId: string, productId: string, size: string) {
         this.sizeId = sizeId;
-        this.colorId = colorId;
+        this.productId = productId;
         this.size = size;
-        this.productAmount = productAmount;
     }
 
     static fromObj(obj: any): ProductSize {
         return new ProductSize(
             obj.sizeId,
-            obj.colorId,
+            obj.productId,
             obj.size,
-            obj.productAmount
         )
     }
 }

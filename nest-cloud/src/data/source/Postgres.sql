@@ -19,6 +19,7 @@ CREATE TABLE USERS (
     user_name VARCHAR NOT NULL,
     email VARCHAR(254) NOT NULL,
     is_active BOOL DEFAULT true,
+    is_enable BOOL DEFAULT true,
     phone_number VARCHAR(20),
     password VARCHAR(254) NOT NULL,
     created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
@@ -105,15 +106,14 @@ CREATE TABLE PRODUCT_COLOR(
 	  REFERENCES PRODUCT(id) ON DELETE CASCADE
 );
 
-CREATE TABLE PRODUCT_SIZE_INFO(
+CREATE TABLE PRODUCT_SIZE(
     id uuid DEFAULT uuid_generate_v4(),
-    color_id uuid,
+    product_id uuid,
     size VARCHAR(50),
-    product_amount decimal,
     PRIMARY KEY(id),
-    CONSTRAINT fk_color
-      FOREIGN KEY(color_id) 
-	  REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE    
+    CONSTRAINT fk_product
+      FOREIGN KEY(product_id) 
+	  REFERENCES PRODUCT(id) ON DELETE CASCADE    
 );
 
 CREATE TABLE PRODUCT_COLOR_RES(
@@ -128,6 +128,39 @@ CREATE TABLE PRODUCT_COLOR_RES(
       FOREIGN KEY(color_id) 
 	  REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE
 );
+
+CREATE TABLE PRODUCT_INFO(
+    id uuid DEFAULT uuid_generate_v4(),
+    size_id uuid,
+    color_id uuid,
+    product_amount decimal,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_size
+        FOREIGN KEY (size_id)
+        REFERENCES PRODUCT_SIZE(id) ON DELETE CASCADE,
+    CONSTRAINT fk_color
+        FOREIGN KEY(color_id)
+        REFERENCES PRODUCT_COLOR(id) ON DELETE CASCADE
+);
+
+CREATE TABLE CART_ITEMS(
+    id uuid DEFAULT uuid_generate_v4(),
+    product_info_id uuid,
+    user_id uuid,
+    product_amount decimal,
+    created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_product_info
+        FOREIGN KEY (product_info_id)
+        REFERENCES PRODUCT_INFO(id) ON DELETE CASCADE,
+     CONSTRAINT fk_user
+        FOREIGN KEY(user_id)
+        REFERENCES USERS(user_id) ON DELETE CASCADE  
+
+);
+
+
 
 
 -- init data

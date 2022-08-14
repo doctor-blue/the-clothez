@@ -1,26 +1,23 @@
-import { ProductColor } from "src/domain/model/ProductColor";
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ProductColorEntity } from "./ProductColorEntity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IEntity } from "./IEntity";
+import { ProductEntity } from "./ProductEntity";
+import { ProductInfoEntity } from "./ProductInfoEntity";
 
-@Entity("product_size_info")
-export class ProductSizeEntity {
+@Entity("product_size")
+export class ProductSizeEntity implements IEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
     @Column({
         nullable: true,
     })
-    color_id: string;
+    product_id: string;
     @Column({
         nullable: true,
         length: 50
     })
     size: string;
-    @Column({
-        nullable: true,
-        default: 0
-    })
-    product_amount: number;
+
     @Column({
         nullable: true,
         default: currentTime()
@@ -33,25 +30,29 @@ export class ProductSizeEntity {
     updated_at: Date;
 
     @ManyToOne(
-        () => ProductColorEntity,
-        (color) => color.sizeList,
+        () => ProductEntity,
+        (product) => product.sizeList,
         { onDelete: "CASCADE" }
     )
-    @JoinColumn({ name: "color_id" })
-    color: ProductColorEntity;
+    @JoinColumn({ name: "product_id" })
+    product: ProductEntity;
+
+    @OneToMany(
+        () => ProductInfoEntity,
+        (info) => info.size_id,
+    )
+    productInfos: ProductInfoEntity[];
 
     constructor(
         size_id: string,
-        color_id: string,
+        product_id: string,
         size: string,
-        product_amount: number,
         created_at: Date,
         updated_at: Date,
     ) {
         this.id = size_id;
-        this.color_id = color_id;
+        this.product_id = product_id;
         this.size = size;
-        this.product_amount = product_amount;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }

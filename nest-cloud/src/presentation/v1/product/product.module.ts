@@ -6,6 +6,7 @@ import { ProductEntity } from 'src/data/entity/ProductEntity';
 import { ProductColorEntity } from 'src/data/entity/ProductColorEntity';
 import { ProductSizeEntity } from 'src/data/entity/ProductSizeEntity';
 import { ProductColorResEntity } from 'src/data/entity/ProductColorResEntity';
+import { ProductInfoEntity } from 'src/data/entity/ProductInfoEntity';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ProductColorResEntity } from 'src/data/entity/ProductColorResEntity';
       ProductEntity,
       ProductColorEntity,
       ProductSizeEntity,
-      ProductColorResEntity
+      ProductColorResEntity,
+      ProductInfoEntity,
     ]),
   ],
   providers: [ProductService],

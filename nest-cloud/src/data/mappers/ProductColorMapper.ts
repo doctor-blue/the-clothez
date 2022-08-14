@@ -11,7 +11,6 @@ export class ProductColorMapper implements DomainMapper<ProductColor, ProductCol
             entity.description,
             entity.color_hex,
             [],
-            [],
         )
     }
     fromDomain(domain: ProductColor): ProductColorEntity {

@@ -1,5 +1,6 @@
 import { CategoryMapper } from "src/data/mappers/CategoryMapper";
 import { ProductColorMapper } from "src/data/mappers/ProductColorMapper";
+import { ProductInfoMapper } from "src/data/mappers/ProductInfoMapper";
 import { ProductMapper } from "src/data/mappers/ProductMapper";
 import { ProductSizeMapper } from "src/data/mappers/ProductSizeMapper";
 import { ProductColorResMapper } from "src/data/mappers/ResourceMapper";
@@ -43,5 +44,9 @@ export default class MapperModule {
 
     provideProductColorResMapper(): ProductColorResMapper {
         return new ProductColorResMapper();
+    }
+
+    provideProductInfoMapper(): ProductInfoMapper {
+        return new ProductInfoMapper();
     }
 }

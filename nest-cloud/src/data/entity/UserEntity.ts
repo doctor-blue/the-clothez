@@ -4,8 +4,9 @@ import {
     Column,
     PrimaryGeneratedColumn,
     ManyToOne,
-    JoinColumn,
+    OneToMany,
 } from 'typeorm'
+import { CartItemEntity } from './CartItemEntity';
 import { IEntity } from './IEntity';
 import { PermissionEntity } from './PermissionEntity';
 @Entity("users")
@@ -42,20 +43,33 @@ export class UserEntity implements IEntity {
         default: currentTime()
     })
     updated_at: Date;
+
     @Column()
     avatar: string;
+
     @Column({ nullable: true })
     gender: number;
+
     @Column({ default: true })
     is_active: boolean;
+
+    @Column({ default: true })
+    is_enable: boolean;
+
     @Column({ nullable: true })
     dob?: Date;
+    
     @Column({ nullable: true })
     permission_id: number;
 
     @ManyToOne(() => PermissionEntity, (permission: PermissionEntity) => permission.permission_id)
     permission: PermissionEntity
 
+    @OneToMany(
+        () => CartItemEntity,
+        (item) => item.user
+    )
+    cartItems: CartItemEntity[];
 
     constructor(user_id: string,
         first_name: string,

@@ -16,6 +16,8 @@ export class ProductMapper implements DomainMapper<Product, ProductEntity>{
             entity.price,
             entity.unit_price,
             entity.sub_category_id,
+            [],
+            [],
             []
         )
     }

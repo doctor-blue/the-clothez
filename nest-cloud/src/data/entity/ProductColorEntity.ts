@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { IEntity } from "./IEntity";
 import { ProductColorResEntity } from "./ProductColorResEntity";
 import { ProductEntity } from "./ProductEntity";
+import { ProductInfoEntity } from "./ProductInfoEntity";
 import { ProductSizeEntity } from "./ProductSizeEntity";
 
 @Entity("product_color")
@@ -50,17 +51,18 @@ export class ProductColorEntity implements IEntity {
     @JoinColumn({ name: "product_id" })
     product: ProductEntity;
 
-    @OneToMany(
-        () => ProductSizeEntity,
-        (size) => size.color
-    )
-    sizeList: ProductSizeEntity[]
 
     @OneToMany(
         () => ProductColorResEntity,
         (res) => res.color
     )
     resources: ProductColorResEntity[]
+
+    @OneToMany(
+        () => ProductInfoEntity,
+        (info) => info.colors,
+    )
+    productInfo: ProductInfoEntity;
 
     constructor(
         color_id: string,

@@ -6,17 +6,15 @@ export class ProductSizeMapper implements DomainMapper<ProductSize, ProductSizeE
     toDomain(entity: ProductSizeEntity): ProductSize {
         return new ProductSize(
             entity.id,
-            entity.color_id,
+            entity.product_id,
             entity.size,
-            entity.product_amount
         )
     }
     fromDomain(domain: ProductSize): ProductSizeEntity {
         return new ProductSizeEntity(
             domain.sizeId,
-            domain.colorId,
+            domain.productId,
             domain.size,
-            domain.productAmount,
             null, null
         )
     }

@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 import { IEntity } from "./IEntity";
 import { ProductColorEntity } from "./ProductColorEntity";
+import { ProductSizeEntity } from "./ProductSizeEntity";
 import { SubCategoryEntity } from "./SubCategoryEntity";
 
 @Entity("product")
@@ -75,7 +76,15 @@ export class ProductEntity implements IEntity {
         () => ProductColorEntity,
         (color) => color.product
     )
-    colors: ProductColorEntity[]
+    colors: ProductColorEntity[];
+
+    @OneToMany(
+        () => ProductSizeEntity,
+        (color) => color.product
+    )
+    sizeList: ProductSizeEntity[];
+
+
 
 
     constructor(

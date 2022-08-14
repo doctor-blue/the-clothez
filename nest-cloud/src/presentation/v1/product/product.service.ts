@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProductColorEntity } from 'src/data/entity/ProductColorEntity';
 import { ProductColorResEntity } from 'src/data/entity/ProductColorResEntity';
 import { ProductEntity } from 'src/data/entity/ProductEntity';
+import { ProductInfoEntity } from 'src/data/entity/ProductInfoEntity';
 import { ProductSizeEntity } from 'src/data/entity/ProductSizeEntity';
 import MapperModule from 'src/di/MapperModule';
 import { EXECUTE_QUERY_FAILURE, INVALID_INFO } from 'src/domain/const/ErrorConst';
@@ -27,12 +28,15 @@ export class ProductService {
         private readonly sizeRepo: Repository<ProductSizeEntity>,
         @InjectRepository(ProductColorResEntity)
         private readonly resRepo: Repository<ProductColorResEntity>,
+        @InjectRepository(ProductInfoEntity)
+        private readonly productInfoRepo: Repository<ProductInfoEntity>,
     ) {
     }
     private productMapper = MapperModule.getInstance().provideProductMapper();
     private productColorMapper = MapperModule.getInstance().provideProducColortMapper();
     private productSizeMapper = MapperModule.getInstance().provideProductSizeMapper();
     private productColorResMapper = MapperModule.getInstance().provideProductColorResMapper();
+    private productInfoMapper = MapperModule.getInstance().provideProductInfoMapper();
 
     async getProducts(): Promise<IResponse<Array<Product>>> {
         const products = []
@@ -41,20 +45,29 @@ export class ProductService {
             const colorEntities = await this.colorRepo.find();
             const sizeEntities = await this.sizeRepo.find();
             const resourceEntities = await this.resRepo.find();
+            const infoEntities = await this.productInfoRepo.find();
+
             productEntities.forEach(productEntity => {
                 const product = this.productMapper.toDomain(productEntity);
                 const mColorEntities = colorEntities.filter((color) => color.product_id == product.productId);
+                const sizes = sizeEntities.filter(size => size.product_id == productEntity.id).map(size => this.productSizeMapper.toDomain(size));
+
                 const colors = [];
+                let infos = [];
+                product.sizes = sizes;
+                
 
                 mColorEntities.forEach(colorEntity => {
                     const color = this.productColorMapper.toDomain(colorEntity);
-                    const sizes = sizeEntities.filter(size => size.color_id == color.colorId).map(size => this.productSizeMapper.toDomain(size));
+                    const productInfo = infoEntities.filter(info => info.color_id == colorEntity.id).map(info => this.productInfoMapper.toDomain(info));
+                    infos = infos.concat(productInfo);
                     const resources = resourceEntities.filter(res => res.color_id == color.colorId).map(res => this.productColorResMapper.toDomain(res));
                     color.resources = resources;
-                    color.sizes = sizes;
                     colors.push(color);
-                })
+                });
+
                 product.colors = colors
+                product.infos = infos;
                 products.push(product);
             })
         } catch (error) {
@@ -257,8 +270,7 @@ export class ProductService {
 
     async createProductSize(size: ProductSize): Promise<IResponse<string>> {
         if (!size.size ||
-            !size.productAmount ||
-            !size.colorId
+            !size.productId
         ) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
@@ -267,8 +279,7 @@ export class ProductService {
             result = await this.sizeRepo.createQueryBuilder()
                 .insert().into(ProductSizeEntity).values([
                     {
-                        color_id: size.colorId,
-                        product_amount: size.productAmount,
+                        product_id: size.productId,
                         size: size.size
                     }
                 ]).returning("id").execute()
@@ -286,7 +297,6 @@ export class ProductService {
     async updateProductSize(size: ProductSize): Promise<IResponse<boolean>> {
 
         if (!size.size ||
-            !size.productAmount ||
             !size.sizeId) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
@@ -297,7 +307,6 @@ export class ProductService {
                 .update(ProductSizeEntity).set({
                     updated_at: currentTime(),
                     size: size.size,
-                    product_amount: size.productAmount
                 }).where("id=:id", { id: size.sizeId }).execute();
 
         } catch (error) {

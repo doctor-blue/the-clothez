@@ -1,4 +1,6 @@
 import { ProductColor } from "./ProductColor";
+import { ProductInfo } from "./ProductInfo";
+import { ProductSize } from "./ProductSize";
 
 export class Product {
     productId: string;
@@ -12,7 +14,9 @@ export class Product {
     price: number;
     unitPrice: string;
     subCategoryId: string;
-    colors: Array<ProductColor>
+    colors: Array<ProductColor>;
+    sizes: Array<ProductSize>;
+    infos: Array<ProductInfo>;
 
     constructor(
         productId: string,
@@ -26,7 +30,9 @@ export class Product {
         price: number,
         unitPrice: string,
         subCategoryId: string,
-        colors: Array<ProductColor>
+        colors: Array<ProductColor>,
+        sizes: Array<ProductSize>,
+        infos: Array<ProductInfo>
     ) {
         this.productId = productId;
         this.name = name;
@@ -40,6 +46,8 @@ export class Product {
         this.unitPrice = unitPrice;
         this.subCategoryId = subCategoryId;
         this.colors = colors;
+        this.sizes = sizes;
+        this.infos = infos;
     }
 
     static fromObj(obj: any): Product {
@@ -58,7 +66,9 @@ export class Product {
             obj.price,
             obj.unitPrice,
             obj.subCategoryId,
-            colors
+            colors,
+            [],
+            []
         )
     }
 

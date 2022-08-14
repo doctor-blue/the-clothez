@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { delay } from 'rxjs';
 import { Category, SubCategory } from 'src/domain/model/Category';
 import { AppModule } from '../app.module';
 import { CategoryController } from '../v1/category/category.controller';
