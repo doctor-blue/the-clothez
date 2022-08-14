@@ -1,6 +1,6 @@
 import { ProductColor } from "src/domain/model/ProductColor";
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ProductColorEntity } from "./ProductColorEntity";
 
 @Entity("product_size_info")
@@ -34,8 +34,10 @@ export class ProductSizeEntity {
 
     @ManyToOne(
         () => ProductColorEntity,
-        (color) => color.sizeList
+        (color) => color.sizeList,
+        { onDelete: "CASCADE" }
     )
+    @JoinColumn({ name: "color_id" })
     color: ProductColorEntity;
 
     constructor(

@@ -4,6 +4,7 @@ import { ProductColorEntity } from 'src/data/entity/ProductColorEntity';
 import { ProductColorResEntity } from 'src/data/entity/ProductColorResEntity';
 import { ProductEntity } from 'src/data/entity/ProductEntity';
 import { ProductSizeEntity } from 'src/data/entity/ProductSizeEntity';
+import MapperModule from 'src/di/MapperModule';
 import { EXECUTE_QUERY_FAILURE, INVALID_INFO } from 'src/domain/const/ErrorConst';
 import { SUCCESS_STATUS } from 'src/domain/const/StatusConst';
 import { Product } from 'src/domain/model/Product';
@@ -28,6 +29,40 @@ export class ProductService {
         private readonly resRepo: Repository<ProductColorResEntity>,
     ) {
     }
+    private productMapper = MapperModule.getInstance().provideProductMapper();
+    private productColorMapper = MapperModule.getInstance().provideProducColortMapper();
+    private productSizeMapper = MapperModule.getInstance().provideProductSizeMapper();
+    private productColorResMapper = MapperModule.getInstance().provideProductColorResMapper();
+
+    async getProducts(): Promise<IResponse<Array<Product>>> {
+        const products = []
+        try {
+            const productEntities = await this.productRepo.find();
+            const colorEntities = await this.colorRepo.find();
+            const sizeEntities = await this.sizeRepo.find();
+            const resourceEntities = await this.resRepo.find();
+            productEntities.forEach(productEntity => {
+                const product = this.productMapper.toDomain(productEntity);
+                const mColorEntities = colorEntities.filter((color) => color.product_id == product.productId);
+                const colors = [];
+
+                mColorEntities.forEach(colorEntity => {
+                    const color = this.productColorMapper.toDomain(colorEntity);
+                    const sizes = sizeEntities.filter(size => size.color_id == color.colorId).map(size => this.productSizeMapper.toDomain(size));
+                    const resources = resourceEntities.filter(res => res.color_id == color.colorId).map(res => this.productColorResMapper.toDomain(res));
+                    color.resources = resources;
+                    color.sizes = sizes;
+                    colors.push(color);
+                })
+                product.colors = colors
+                products.push(product);
+            })
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson())
+        }
+
+        return new IResponse(products, SUCCESS_STATUS);
+    }
 
 
     async createProduct(product: Product): Promise<IResponse<string>> {
@@ -43,20 +78,26 @@ export class ProductService {
             !product.subCategoryId) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
-        const result = await this.productRepo.createQueryBuilder().insert().into(ProductEntity).values([
-            {
-                name: product.name,
-                description: product.description,
-                product_code: product.productCode,
-                form: product.form,
-                material: product.material,
-                unit: product.unit,
-                quantity_per_unit: product.quantityPerUnit,
-                price: product.price,
-                unit_price: product.unitPrice,
-                sub_category_id: product.subCategoryId
-            }
-        ]).returning("id").execute()
+        let result;
+
+        try {
+            result = await this.productRepo.createQueryBuilder().insert().into(ProductEntity).values([
+                {
+                    name: product.name,
+                    description: product.description,
+                    product_code: product.productCode,
+                    form: product.form,
+                    material: product.material,
+                    unit: product.unit,
+                    quantity_per_unit: product.quantityPerUnit,
+                    price: product.price,
+                    unit_price: product.unitPrice,
+                    sub_category_id: product.subCategoryId
+                }
+            ]).returning("id").execute()
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
 
 
         if (!result) {
@@ -82,19 +123,26 @@ export class ProductService {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
 
-        const result = await this.productRepo.createQueryBuilder()
-            .update(ProductEntity).set({
-                updated_at: currentTime(),
-                name: product.name,
-                description: product.description,
-                product_code: product.productCode,
-                form: product.form,
-                material: product.material,
-                unit: product.unit,
-                quantity_per_unit: product.quantityPerUnit,
-                price: product.price,
-                unit_price: product.unitPrice,
-            }).where("id=:id", { id: product.productId }).execute();
+        let result
+
+        try {
+            result = await this.productRepo.createQueryBuilder()
+                .update(ProductEntity).set({
+                    updated_at: currentTime(),
+                    name: product.name,
+                    description: product.description,
+                    product_code: product.productCode,
+                    form: product.form,
+                    material: product.material,
+                    unit: product.unit,
+                    quantity_per_unit: product.quantityPerUnit,
+                    price: product.price,
+                    unit_price: product.unitPrice,
+                }).where("id=:id", { id: product.productId }).execute();
+
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
 
         if (result.affected == 0) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
@@ -132,15 +180,18 @@ export class ProductService {
             !color.hex) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
-        const result = await this.colorRepo.createQueryBuilder()
-            .insert().into(ProductColorEntity).values([
-                {
-                    name: color.name,
-                    description: color.description,
-                    product_id: color.productId,
-                    color_hex: color.hex
-                }
-            ]).returning("id").execute()
+        let result;
+        try {
+            result = await this.colorRepo.createQueryBuilder()
+                .insert().into(ProductColorEntity).values([
+                    {
+                        name: color.name,
+                        description: color.description,
+                        product_id: color.productId,
+                        color_hex: color.hex
+                    }
+                ]).returning("id").execute()
+        } catch (err) { }
 
 
         if (!result) {
@@ -160,13 +211,20 @@ export class ProductService {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
 
-        const result = await this.colorRepo.createQueryBuilder()
-            .update(ProductColorEntity).set({
-                updated_at: currentTime(),
-                name: color.name,
-                description: color.description,
-                color_hex: color.hex
-            }).where("id=:id", { id: color.colorId }).execute();
+        let result;
+
+        try {
+            result = await this.colorRepo.createQueryBuilder()
+                .update(ProductColorEntity).set({
+                    updated_at: currentTime(),
+                    name: color.name,
+                    description: color.description,
+                    color_hex: color.hex
+                }).where("id=:id", { id: color.colorId }).execute();
+
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
 
         if (result.affected == 0) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
@@ -204,15 +262,19 @@ export class ProductService {
         ) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
-        const result = await this.sizeRepo.createQueryBuilder()
-            .insert().into(ProductSizeEntity).values([
-                {
-                    color_id: size.colorId,
-                    product_amount: size.productAmount,
-                    size: size.size
-                }
-            ]).returning("id").execute()
+        let result
+        try {
+            result = await this.sizeRepo.createQueryBuilder()
+                .insert().into(ProductSizeEntity).values([
+                    {
+                        color_id: size.colorId,
+                        product_amount: size.productAmount,
+                        size: size.size
+                    }
+                ]).returning("id").execute()
+        } catch (error) {
 
+        }
 
         if (!result) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
@@ -229,13 +291,18 @@ export class ProductService {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
 
-        const result = await this.sizeRepo.createQueryBuilder()
-            .update(ProductSizeEntity).set({
-                updated_at: currentTime(),
-                size: size.size,
-                product_amount: size.productAmount
-            }).where("id=:id", { id: size.sizeId }).execute();
+        let result
+        try {
+            result = await this.sizeRepo.createQueryBuilder()
+                .update(ProductSizeEntity).set({
+                    updated_at: currentTime(),
+                    size: size.size,
+                    product_amount: size.productAmount
+                }).where("id=:id", { id: size.sizeId }).execute();
 
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
         if (result.affected == 0) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
         }
@@ -273,17 +340,22 @@ export class ProductService {
         ) {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
-        const result = await this.sizeRepo.createQueryBuilder()
-            .insert().into(ProductColorResEntity).values([
-                {
-                    color_id: res.colorId,
-                    url: res.url,
-                    description: res.description,
-                    mine_type: res.mineType,
-                    res_type: res.resType
-                }
-            ]).returning("id").execute()
 
+        let result
+        try {
+            result = await this.sizeRepo.createQueryBuilder()
+                .insert().into(ProductColorResEntity).values([
+                    {
+                        color_id: res.colorId,
+                        url: res.url,
+                        description: res.description,
+                        mine_type: res.mineType,
+                        res_type: res.resType
+                    }
+                ]).returning("id").execute()
+
+        } catch (error) {
+        }
 
         if (!result) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
@@ -303,16 +375,21 @@ export class ProductService {
             throw new InternalServerErrorException(INVALID_INFO.toJson())
         }
 
-        const result = await this.resRepo.createQueryBuilder()
-            .update(ProductColorResEntity).set({
-                updated_at: currentTime(),
-                url: res.url,
-                description: res.description,
-                mine_type: res.mineType,
-                res_type: res.resType,
-                id: res.resId
-            }).where("id=:id", { id: res.resId }).execute();
+        let result
+        try {
+            result = await this.resRepo.createQueryBuilder()
+                .update(ProductColorResEntity).set({
+                    updated_at: currentTime(),
+                    url: res.url,
+                    description: res.description,
+                    mine_type: res.mineType,
+                    res_type: res.resType,
+                    id: res.resId
+                }).where("id=:id", { id: res.resId }).execute();
 
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
         if (result.affected == 0) {
             throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
         }

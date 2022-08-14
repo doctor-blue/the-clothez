@@ -1,6 +1,6 @@
 import { Category } from "src/domain/model/Category";
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CategoryEntity } from "./CategoryEntity";
 import { IEntity } from "./IEntity";
 import { ProductEntity } from "./ProductEntity";
@@ -42,7 +42,8 @@ export class SubCategoryEntity implements IEntity {
 
     @ManyToOne(() => CategoryEntity,
         (category: CategoryEntity) =>
-            category.subCategories)
+            category.subCategories, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: "category_id" })
     category: CategoryEntity
 
     @OneToMany(() => ProductEntity, (product: ProductEntity) => product.subCategory)

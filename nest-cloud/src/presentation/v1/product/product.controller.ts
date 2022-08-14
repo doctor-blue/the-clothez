@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseFilters, UseGuards } from '@nestjs/common';
 import { Product } from 'src/domain/model/Product';
 import { ProductColor } from 'src/domain/model/ProductColor';
 import { ProductColorRes } from 'src/domain/model/ProductColorRes';
@@ -14,6 +14,13 @@ export class ProductController {
     constructor(
         private readonly productService: ProductService
     ) { }
+
+    @Get()
+    @UseFilters(HttpExceptionFilter)
+    @UseGuards(JwtAuthGuard)
+    async getProducts() {
+        return await this.productService.getProducts();
+    }
 
     @Post()
     @UseFilters(HttpExceptionFilter)

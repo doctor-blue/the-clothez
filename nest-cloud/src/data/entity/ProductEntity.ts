@@ -1,5 +1,6 @@
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 import { IEntity } from "./IEntity";
 import { ProductColorEntity } from "./ProductColorEntity";
 import { SubCategoryEntity } from "./SubCategoryEntity";
@@ -64,7 +65,10 @@ export class ProductEntity implements IEntity {
     })
     updated_at: Date;
 
-    @ManyToOne(() => SubCategoryEntity, (subCate) => subCate.products)
+    @ManyToOne(() => SubCategoryEntity,
+        (subCate) => subCate.products,
+        { onDelete: "CASCADE" })
+    @JoinColumn({ name: "sub_category_id" })
     subCategory: SubCategoryEntity
 
     @OneToMany(

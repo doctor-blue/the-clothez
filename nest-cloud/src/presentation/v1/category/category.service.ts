@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from 'src/data/entity/CategoryEntity';
 import { SubCategoryEntity } from 'src/data/entity/SubCategoryEntity';
 import MapperModule from 'src/di/MapperModule';
-import { CREATE_CATEGORY_FAILURE, DELETE_CATEGORY_FAILURE, INVALID_CATEGORY_INFO } from 'src/domain/const/ErrorConst';
+import { CREATE_CATEGORY_FAILURE, DELETE_CATEGORY_FAILURE, EXECUTE_QUERY_FAILURE, INVALID_CATEGORY_INFO } from 'src/domain/const/ErrorConst';
 import { SUCCESS_STATUS } from 'src/domain/const/StatusConst';
 import { Category, SubCategory } from 'src/domain/model/Category';
 import { currentTime } from 'src/domain/utils/Time';
@@ -33,13 +33,19 @@ export class CategoryService {
         )
             throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
-        const result = await this.categoryRepo.createQueryBuilder().insert().into(CategoryEntity).values([
-            {
-                gender: category.gender,
-                name: category.name,
-                description: category.description
-            }
-        ]).returning("id").execute()
+        let result;
+
+        try {
+            result = await this.categoryRepo.createQueryBuilder().insert().into(CategoryEntity).values([
+                {
+                    gender: category.gender,
+                    name: category.name,
+                    description: category.description
+                }
+            ]).returning("id").execute()
+        } catch (err) {
+            throw new InternalServerErrorException(CREATE_CATEGORY_FAILURE.toJson());
+        }
 
         if (!result) {
             throw new InternalServerErrorException(CREATE_CATEGORY_FAILURE.toJson());
@@ -56,17 +62,23 @@ export class CategoryService {
         )
             throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
-        const result = await this.categoryRepo.createQueryBuilder()
-            .update(CategoryEntity).set({
-                updated_at: currentTime(),
-                gender: category.gender,
-                name: category.name,
-                description: category.description
-            }).where("id=:id", { id: category.id }).execute();
-        console.log(result);
+        let result;
+
+        try {
+            result = await this.categoryRepo.createQueryBuilder()
+                .update(CategoryEntity).set({
+                    updated_at: currentTime(),
+                    gender: category.gender,
+                    name: category.name,
+                    description: category.description
+                }).where("id=:id", { id: category.id }).execute();
+            console.log(result);
+        } catch (err) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
 
         if (result.affected == 0) {
-            throw new InternalServerErrorException(CREATE_CATEGORY_FAILURE.toJson());
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
         }
         return new IResponse(true, SUCCESS_STATUS)
     }
@@ -96,16 +108,23 @@ export class CategoryService {
         )
             throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
-        const result = await this.categoryRepo.createQueryBuilder().insert().into(SubCategoryEntity).values([
-            {
-                name: subCategory.name,
-                description: subCategory.description,
-                category_id: subCategory.categoryId
-            }
-        ]).returning("id").execute()
+        let result
+
+        try {
+            result = await this.categoryRepo.createQueryBuilder().insert().into(SubCategoryEntity).values([
+                {
+                    name: subCategory.name,
+                    description: subCategory.description,
+                    category_id: subCategory.categoryId
+                }
+            ]).returning("id").execute()
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+
+        }
 
         if (!result) {
-            throw new InternalServerErrorException(CREATE_CATEGORY_FAILURE.toJson());
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
         }
 
         return new IResponse(result.raw[0].id, SUCCESS_STATUS)
@@ -119,15 +138,20 @@ export class CategoryService {
         )
             throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
 
-        const result = await this.categoryRepo.createQueryBuilder()
-            .update(SubCategoryEntity).set({
-                updated_at: currentTime(),
-                name: subCategory.name,
-                description: subCategory.description
-            }).where("id=:id", { id: subCategory.id }).execute();
+        let result;
+        try {
+            result = await this.categoryRepo.createQueryBuilder()
+                .update(SubCategoryEntity).set({
+                    updated_at: currentTime(),
+                    name: subCategory.name,
+                    description: subCategory.description
+                }).where("id=:id", { id: subCategory.id }).execute();
 
+        } catch (error) {
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
+        }
         if (result.affected == 0) {
-            throw new InternalServerErrorException(CREATE_CATEGORY_FAILURE.toJson());
+            throw new InternalServerErrorException(EXECUTE_QUERY_FAILURE.toJson());
         }
         return new IResponse(true, SUCCESS_STATUS)
     }
@@ -137,7 +161,7 @@ export class CategoryService {
             subCategoryId
         )
             throw new InternalServerErrorException(INVALID_CATEGORY_INFO.toJson());
-            
+
         const result = await this.subCategoryRepo.delete({
             id: subCategoryId
         });

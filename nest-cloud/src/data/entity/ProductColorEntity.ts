@@ -1,5 +1,5 @@
 import { currentTime } from "src/domain/utils/Time";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { IEntity } from "./IEntity";
 import { ProductColorResEntity } from "./ProductColorResEntity";
 import { ProductEntity } from "./ProductEntity";
@@ -44,8 +44,10 @@ export class ProductColorEntity implements IEntity {
 
     @ManyToOne(
         () => ProductEntity,
-        (product) => product.colors
+        (product) => product.colors,
+        { onDelete: "CASCADE" }
     )
+    @JoinColumn({ name: "product_id" })
     product: ProductEntity;
 
     @OneToMany(

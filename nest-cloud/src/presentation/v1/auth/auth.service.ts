@@ -48,7 +48,7 @@ export class AuthService {
     }
 
     async validateUser(userName: string, password: string): Promise<UserEntity> {
-        const user = await this.userRepository.findOneBy({ user_name: userName });
+        const user = await this.userRepository.findOneBy({ email: userName });
         if (!user) {
             throw new UnauthorizedException(INCORRECT_USER_NAME_PWD.toJson())
         }
