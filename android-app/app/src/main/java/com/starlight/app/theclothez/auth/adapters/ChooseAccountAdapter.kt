@@ -1,48 +1,71 @@
 package com.starlight.app.theclothez.auth.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
+import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToExistingAccountViewHolder
+import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToOtherAccountViewHolder
+import com.starlight.app.theclothez.others.Constant.LOGIN_TO_EXISTING_ACCOUNT_TYPE
+import com.starlight.app.theclothez.others.Constant.LOGIN_TO_OTHER_ACCOUNT_TYPE
+import com.starlight.module.uicore.databinding.ItemExistingAccountBinding
+import com.starlight.module.uicore.databinding.ItemNonExistingAccountBinding
 
-class ChooseAccountAdapter : RecyclerView.Adapter<ChooseAccountViewHolder>() {
+class ChooseAccountAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var accounts: List<String> = listOf(
-        "Ahehe",
-        "Ahoho",
-        "Ahaha",
-        "Ahkhk",
-        "Ahuhu",
-        "Ahahi",
-        "Ahiha",
-        "Ahiho"
-    )
+    private val differCallback = object : DiffUtil.ItemCallback<Equatable>() {
+        override fun areItemsTheSame(
+            oldItem: Equatable,
+            newItem: Equatable
+        ) = oldItem.viewType() == newItem.viewType()
 
-    private var options: List<ChooseAccountItem> = listOf(
-        ChooseAccountItem("Guest", "Login as Guest"),
-        ChooseAccountItem("+", "Create new account")
-    )
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseAccountViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return ChooseAccountViewHolder.create(inflater, parent)
+        override fun areContentsTheSame(
+            oldItem: Equatable,
+            newItem: Equatable
+        ) = oldItem == newItem
     }
 
-    override fun onBindViewHolder(holder: ChooseAccountViewHolder, position: Int) {
-        if (position >= accounts.size) {
-            holder.onBindOtherOptions(options[position - accounts.size])
-            Log.d("AAAAAA", position.toString())
-        } else {
-            holder.onBind(accounts[position])
-            Log.d("AAAAAA", position.toString())
+    val differ = AsyncListDiffer(this, differCallback)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            LOGIN_TO_EXISTING_ACCOUNT_TYPE -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ItemExistingAccountBinding.inflate(inflater, parent, false)
+                LoginToExistingAccountViewHolder(binding)
+            }
+            LOGIN_TO_OTHER_ACCOUNT_TYPE -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ItemNonExistingAccountBinding.inflate(inflater, parent, false)
+                LoginToOtherAccountViewHolder(binding)
+            }
+            else -> throw IllegalArgumentException("Cannot create viewHolder for itemViewType")
         }
-
     }
 
-    override fun getItemCount(): Int = accounts.size + 2
-}
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is LoginToExistingAccountViewHolder -> {
+                val item = differ.currentList[position] as ExistingAccountItem
+                holder.bind(item)
+            }
+            is LoginToOtherAccountViewHolder -> {
+                val item = differ.currentList[position] as NonExistingAccountItem
+                holder.bind(item)
+            }
+            else -> Unit
+        }
+    }
 
-data class ChooseAccountItem(
-    val firstChar: String,
-    val text: String,
-)
+    override fun getItemViewType(position: Int): Int {
+        return differ.currentList[position].viewType()
+    }
+
+    override fun getItemCount() = differ.currentList.size
+
+
+}

@@ -1,12 +1,14 @@
 package com.starlight.app.theclothez
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.starlight.app.theclothez.auth.AuthenticationViewModel
 import com.starlight.app.theclothez.auth.adapters.ChooseAccountAdapter
+import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
+import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
+import com.starlight.app.theclothez.others.SpacesItemDecorator
 import com.starlight.module.uicore.BaseActivity
 import com.starlight.module.uicore.R
 import com.starlight.module.uicore.databinding.FragmentChooseAccountBinding
@@ -18,17 +20,50 @@ class MainActivity :
 
     private val authViewModel: AuthenticationViewModel by viewModels()
 
-    private val chooseAccountAdapter by lazy {
+    private val adapter by lazy {
         ChooseAccountAdapter()
+    }
+
+    private val listTest by lazy {
+        val list = mutableListOf<Equatable>()
+        list.add(ExistingAccountItem("An"))
+        list.add(ExistingAccountItem("Vu"))
+        list.add(ExistingAccountItem("Tan"))
+        list.add(ExistingAccountItem("An"))
+        list.add(ExistingAccountItem("Vu"))
+        list.add(ExistingAccountItem("Tan"))
+        list.add(ExistingAccountItem("An"))
+        list.add(ExistingAccountItem("Vu"))
+        list.add(ExistingAccountItem("Tan"))
+        list.add(NonExistingAccountItem())
+        list
     }
 
     override fun initControls(savedInstanceState: Bundle?) {
         super.initControls(savedInstanceState)
 
-        authViewModel.loginState.asLiveData().observe(this) {
-            Log.d("MainActivity login", it.data?.message ?: "null")
-        }
+        setupRecyclerView()
+        addingItemsToList()
+    }
 
+    private fun addingItemsToList() {
+        adapter.differ.submitList(listTest)
+    }
+
+
+    private fun setupRecyclerView() {
+        binding.rvChooseAccount.apply {
+            val linearManager = LinearLayoutManager(
+                this@MainActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            layoutManager = linearManager
+            setHasFixedSize(true)
+            setItemViewCacheSize(20)
+            addItemDecoration(SpacesItemDecorator(80))
+            adapter = this@MainActivity.adapter
+        }
     }
 
     override fun initEvents() {
@@ -38,8 +73,5 @@ class MainActivity :
 //                authViewModel.login("vantan.nguyen0726@gmail.com", "nao123456")
 //            }
         }
-        binding.rvChooseAccount.layoutManager = LinearLayoutManager(this)
-        binding.rvChooseAccount.setHasFixedSize(false)
-        binding.rvChooseAccount.adapter = chooseAccountAdapter
     }
 }
