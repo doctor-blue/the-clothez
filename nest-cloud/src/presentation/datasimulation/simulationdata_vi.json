@@ -1,0 +1,153 @@
+[
+    {
+        "gender": 1,
+        "name": "Quần Nam",
+        "description": "Quần nam phong cách",
+        "subCategories": [
+            {
+                "name": "Quần short nam",
+                "description": ""
+            },
+            {
+                "name": "Quần âu nam",
+                "description": ""
+            },
+            {
+                "name": "Quần kaki nam",
+                "description": ""
+            },
+            {
+                "name": "Quần vải nam",
+                "description": ""
+            },
+            {
+                "name": "Quần jean nam",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "gender": 1,
+        "name": "Áo Nam",
+        "description": "Áo nam phong cách",
+        "subCategories": [
+            {
+                "name": "Áo polo nam",
+                "description": ""
+            },
+            {
+                "name": "Áo thun nam",
+                "description": ""
+            },
+            {
+                "name": "Quần sơ mi nam",
+                "description": ""
+            },
+            {
+                "name": "Quần khoác nam",
+                "description": ""
+            },
+            {
+                "name": "Quần vest nam",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "gender": 1,
+        "name": "Phụ kiện nam",
+        "description": "Phụ kiện nam phong cách",
+        "subCategories": [
+            {
+                "name": "Mũ/Nón",
+                "description": ""
+            },
+            {
+                "name": "Băng đô",
+                "description": ""
+            },
+            {
+                "name": "Khẩu trang",
+                "description": ""
+            },
+            {
+                "name": "Cà vạt",
+                "description": ""
+            },
+            {
+                "name": "Túi/Balo",
+                "description": ""
+            },
+            {
+                "name": "Đồ lót",
+                "description": ""
+            },
+            {
+                "name": "Vớ",
+                "description": ""
+            },
+            
+            {
+                "name": "Giày dép",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "gender": 2,
+        "name": "Áo nữ",
+        "description": "Áo nữ phong cách",
+        "subCategories": [
+            {
+                "name": "Áo thun nữ",
+                "description": ""
+            },
+            {
+                "name": "Quần sơ mi nữ",
+                "description": ""
+            },
+            {
+                "name": "Quần khoác nữ",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "gender": 2,
+        "name": "Quần nữ",
+        "description": "Quần nữ phong cách",
+        "subCategories": [
+            {
+                "name": "Quần short nữ",
+                "description": ""
+            },
+            {
+                "name": "Quần kaki, nữ",
+                "description": ""
+            },
+            {
+                "name": "Quần vải nữ",
+                "description": ""
+            },
+            {
+                "name": "Quần jean nữ",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "gender": 2,
+        "name": "Váy/Đầm nữ",
+        "description": "Váy/Đầm nữ tính",
+        "subCategories": [
+            {
+                "name": "Chân váy",
+                "description": ""
+            },
+            {
+                "name": "Đầm nữ",
+                "description": ""
+            }
+        ]
+    }
+]
