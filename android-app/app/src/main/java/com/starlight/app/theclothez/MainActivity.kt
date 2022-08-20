@@ -8,6 +8,8 @@ import com.starlight.app.theclothez.auth.adapters.ChooseAccountAdapter
 import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
 import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
 import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
+import com.starlight.app.theclothez.others.Constant.CREATE_NEW_ACCOUNT_TYPE
+import com.starlight.app.theclothez.others.Constant.LOGIN_AS_GUEST_TYPE
 import com.starlight.app.theclothez.others.SpacesItemDecorator
 import com.starlight.module.uicore.BaseActivity
 import com.starlight.module.uicore.R
@@ -35,7 +37,8 @@ class MainActivity :
         list.add(ExistingAccountItem("An"))
         list.add(ExistingAccountItem("Vu"))
         list.add(ExistingAccountItem("Tan"))
-        list.add(NonExistingAccountItem())
+        list.add(NonExistingAccountItem(LOGIN_AS_GUEST_TYPE))
+        list.add(NonExistingAccountItem(CREATE_NEW_ACCOUNT_TYPE))
         list
     }
 

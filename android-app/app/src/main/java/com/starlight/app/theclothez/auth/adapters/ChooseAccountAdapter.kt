@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
 import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
 import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
 import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToExistingAccountViewHolder
 import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToOtherAccountViewHolder
+import com.starlight.app.theclothez.others.Constant.CREATE_NEW_ACCOUNT_TYPE
+import com.starlight.app.theclothez.others.Constant.LOGIN_AS_GUEST_TYPE
 import com.starlight.app.theclothez.others.Constant.LOGIN_TO_EXISTING_ACCOUNT_TYPE
-import com.starlight.app.theclothez.others.Constant.LOGIN_TO_OTHER_ACCOUNT_TYPE
 import com.starlight.module.uicore.databinding.ItemExistingAccountBinding
 import com.starlight.module.uicore.databinding.ItemNonExistingAccountBinding
 
@@ -38,7 +39,12 @@ class ChooseAccountAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val binding = ItemExistingAccountBinding.inflate(inflater, parent, false)
                 LoginToExistingAccountViewHolder(binding)
             }
-            LOGIN_TO_OTHER_ACCOUNT_TYPE -> {
+            CREATE_NEW_ACCOUNT_TYPE -> {
+                val inflater = LayoutInflater.from(parent.context)
+                val binding = ItemNonExistingAccountBinding.inflate(inflater, parent, false)
+                LoginToOtherAccountViewHolder(binding)
+            }
+            LOGIN_AS_GUEST_TYPE -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = ItemNonExistingAccountBinding.inflate(inflater, parent, false)
                 LoginToOtherAccountViewHolder(binding)

@@ -4,13 +4,15 @@
     <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
     <string name="oh_snap">Ôi hỏng!</string>
     <string name="detail">Chi tiết</string>
-    <string name="sign_up">Đăng ký</string>
-    <string name="name">Tên</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
     <string name="email">Email</string>
-    <string name="password">Mật khẩu</string>
-    <string name="repeat_password">Xác nhận mật khẩu</string>
-    <string name="have_account">Tôi đã có tài khoản. </string>
-    <string name="login">Đăng nhập</string>
-    <string name="hello">Xin chào! </string>
-    <string name="hello_greeting">Hãy khơi nguồn cảm hứng và khám phá những điều mới mẻ để làm mới tủ quần áo của bạn</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="have_account">I have an account. </string>
+    <string name="login">Log In</string>
+    <string name="hello">Hello! </string>
+    <string name="hello_greeting">Be inspired and discover something new to renew your closet</string>
+    <string name="login_as_guest">Login as Guest</string>
+    <string name="create_new_account">Create new account</string>
 </resources>
