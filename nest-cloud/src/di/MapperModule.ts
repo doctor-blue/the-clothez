@@ -1,3 +1,4 @@
+import { CartItemMapper } from "src/data/mappers/CartItemMapper";
 import { CategoryMapper } from "src/data/mappers/CategoryMapper";
 import { ProductColorMapper } from "src/data/mappers/ProductColorMapper";
 import { ProductInfoMapper } from "src/data/mappers/ProductInfoMapper";
@@ -48,5 +49,8 @@ export default class MapperModule {
 
     provideProductInfoMapper(): ProductInfoMapper {
         return new ProductInfoMapper();
+    }
+    provideCartItemMapper(): CartItemMapper {
+        return new CartItemMapper()
     }
 }

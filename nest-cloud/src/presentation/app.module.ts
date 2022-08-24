@@ -3,6 +3,7 @@ import { DatabaseModule } from 'src/di/DatabaseModule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './v1/auth/auth.module';
+import { CartModule } from './v1/cart/cart.module';
 import { CategoryModule } from './v1/category/category.module';
 import { ProductModule } from './v1/product/product.module';
 
@@ -12,7 +13,8 @@ import { ProductModule } from './v1/product/product.module';
     AuthModule,
     DatabaseModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    CartModule
   ],
   controllers: [AppController],
   providers: [AppService],
