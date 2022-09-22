@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/img_avatar"
+            android:layout_width="186dp"
+            android:layout_height="186dp"
+            android:background="@drawable/circle_shape"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/lb_first_char"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="L"
+                android:textColor="#000000"
+                android:textSize="64sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/lb_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Login to @Ahihii"
+            android:textColor="@color/navy_light"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</layout>

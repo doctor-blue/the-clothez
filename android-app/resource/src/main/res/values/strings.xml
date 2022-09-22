@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="btn_login">Next</string>
+    <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
+    <string name="oh_snap">Ôi hỏng!</string>
+    <string name="detail">Chi tiết</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="have_account">I have an account. </string>
+    <string name="login">Log In</string>
+    <string name="hello">Hello! </string>
+    <string name="hello_greeting">Be inspired and discover something new to renew your closet</string>
+    <string name="login_as_guest">Login as Guest</string>
+    <string name="create_new_account">Create new account</string>
+</resources>

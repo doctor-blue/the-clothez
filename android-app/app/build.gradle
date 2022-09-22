@@ -103,8 +103,6 @@ dependencies {
     implementation project(path: ':resource')
     implementation project(path: ':ui-core')
 
-
-    //ui
     // swipe to refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$refresh_layout"
     // circle image view
