@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
-import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
-import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.entity.Equatable
+import com.starlight.app.theclothez.auth.adapters.entity.ExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.entity.NonExistingAccountItem
 import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToExistingAccountViewHolder
 import com.starlight.app.theclothez.auth.adapters.view_holders.LoginToOtherAccountViewHolder
 import com.starlight.app.theclothez.others.Constant.CREATE_NEW_ACCOUNT_TYPE
@@ -61,7 +61,7 @@ class ChooseAccountAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             is LoginToOtherAccountViewHolder -> {
                 val item = differ.currentList[position] as NonExistingAccountItem
-                holder.bind(item)
+                holder.onBind(item)
             }
             else -> Unit
         }

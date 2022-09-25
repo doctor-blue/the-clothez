@@ -13,4 +13,7 @@
     <color name="edit_text_color">#EBF1FD</color>
     <color name="purple">#965EFF</color>
     <color name="pink">#FF2D87</color>
+    <color name="background_color">#FFFFFF</color>
+    <color name="background_active_color">#EBF1FD</color>
+    <color name="light_blue">#EBF1FD</color>
 </resources>

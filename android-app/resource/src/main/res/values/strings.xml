@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="the_clothez">The clotheZ</string>
     <string name="btn_login">Next</string>
     <string name="report_and_restart">Báo cáo lỗi và khởi động lại</string>
     <string name="oh_snap">Ôi hỏng!</string>
@@ -15,4 +16,8 @@
     <string name="hello_greeting">Be inspired and discover something new to renew your closet</string>
     <string name="login_as_guest">Login as Guest</string>
     <string name="create_new_account">Create new account</string>
+    <string name="home">Home</string>
+    <string name="saved_items">Saved Items</string>
+    <string name="app_settings">App Settings</string>
+    <string name="help_faqs">Help &amp; FAQs</string>
 </resources>

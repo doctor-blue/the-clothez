@@ -5,9 +5,9 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.starlight.app.theclothez.auth.AuthenticationViewModel
 import com.starlight.app.theclothez.auth.adapters.ChooseAccountAdapter
-import com.starlight.app.theclothez.auth.adapters.adapter_models.Equatable
-import com.starlight.app.theclothez.auth.adapters.adapter_models.ExistingAccountItem
-import com.starlight.app.theclothez.auth.adapters.adapter_models.NonExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.entity.Equatable
+import com.starlight.app.theclothez.auth.adapters.entity.ExistingAccountItem
+import com.starlight.app.theclothez.auth.adapters.entity.NonExistingAccountItem
 import com.starlight.app.theclothez.others.Constant.CREATE_NEW_ACCOUNT_TYPE
 import com.starlight.app.theclothez.others.Constant.LOGIN_AS_GUEST_TYPE
 import com.starlight.app.theclothez.others.SpacesItemDecorator

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_space4dp"
+        android:background="@drawable/bg_common_btn"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_menu"
+            android:layout_width="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_small"
+            android:src="@drawable/ic_log_out" />
+
+        <TextView
+            android:id="@+id/txt_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_screen_super_small"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Home"
+            android:textColor="@color/navy"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+</layout>

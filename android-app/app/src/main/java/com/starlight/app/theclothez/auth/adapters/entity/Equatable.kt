@@ -1,4 +1,4 @@
-package com.starlight.app.theclothez.auth.adapters.adapter_models
+package com.starlight.app.theclothez.auth.adapters.entity
 
 interface Equatable {
     fun viewType(): Int

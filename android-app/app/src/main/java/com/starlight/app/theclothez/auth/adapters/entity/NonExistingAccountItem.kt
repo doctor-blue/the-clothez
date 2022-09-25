@@ -1,4 +1,4 @@
-package com.starlight.app.theclothez.auth.adapters.adapter_models
+package com.starlight.app.theclothez.auth.adapters.entity
 
 import com.starlight.app.theclothez.others.Constant.CREATE_NEW_ACCOUNT_TYPE
 
