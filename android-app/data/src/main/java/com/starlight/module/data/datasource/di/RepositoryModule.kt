@@ -6,10 +6,11 @@ import com.starlight.module.data.datasource.remote.AuthService
 import com.starlight.module.data.datasource.remote.RemoteConfig
 import com.starlight.module.data.repository.AuthenticationRepositoryImpl
 import com.starlight.module.domain.repository.AuthenticationRepository
+import com.starlight.module.domain.usecase.validator.ValidatorUseCase
+import com.starlight.module.domain.usecase.validator.ValidatorUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -21,6 +22,9 @@ class RepositoryModule {
     @Singleton
     fun provideAuthService(): AuthService = RemoteConfig.authService
 
+    @Provides
+    @Singleton
+    fun provideValidatorUseCase(): ValidatorUseCase = ValidatorUseCaseImpl()
 
     @Provides
     @Singleton
