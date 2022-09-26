@@ -66,6 +66,7 @@
     <dimen name="_space3dp">3dp</dimen>
     <dimen name="_space512dp">512dp</dimen>
     <dimen name="_space320dp">320dp</dimen>
+    <dimen name="_space40dp">40dp</dimen>
 
 
 </resources>

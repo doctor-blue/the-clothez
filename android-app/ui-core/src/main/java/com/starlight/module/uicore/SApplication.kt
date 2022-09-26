@@ -31,7 +31,7 @@ abstract class SApplication : Application() {
     }
 
     open fun isShowCrashReport() = true
-    open fun isDebugMode() = false
+    open fun isDebugMode() = true
     abstract fun getActivity(): Class<*>
 
 }

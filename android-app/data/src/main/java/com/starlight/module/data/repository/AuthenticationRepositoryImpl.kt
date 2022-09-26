@@ -14,7 +14,9 @@ import com.starlight.module.domain.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthenticationRepositoryImpl @Inject constructor(
     private val service: AuthService,
     private val userMapper: UserMapper,

@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/space_screen_large"
-        android:background="@drawable/bg__rounder_light_blue_25"
+        android:background="@drawable/bg_rounder_light_blue_25"
         android:orientation="vertical"
         android:padding="@dimen/space_screen_small">
 

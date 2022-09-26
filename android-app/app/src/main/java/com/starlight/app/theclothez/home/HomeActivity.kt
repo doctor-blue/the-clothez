@@ -7,14 +7,14 @@ import com.starlight.module.uicore.BaseActivity
 import com.starlight.module.uicore.R
 import com.starlight.module.uicore.databinding.ActivityHomeBinding
 import com.starlight.module.uicore.utils.setPreventDoubleClick
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private val adapter: DrawerMenuAdapter by lazy {
-        DrawerMenuAdapter {
-
-        }
+        DrawerMenuAdapter(onMenuItemClick)
     }
 
     override fun initControls(savedInstanceState: Bundle?) {
@@ -28,9 +28,34 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 .toBuilder()
                 .setAllCornerSizes(radius)
                 .build()
+        }
+    }
 
-            btnTest.setPreventDoubleClick {
-                mainRoot.openDrawer(navView)
+    fun openDrawer() {
+        binding {
+            mainRoot.openDrawer(navView)
+        }
+    }
+
+    fun closeDrawer() {
+        binding {
+            mainRoot.closeDrawer(navView)
+        }
+    }
+
+    private val onMenuItemClick: (DrawerMenuItem) -> Unit = {
+        when (it.id) {
+            DrawerMenuItem.HOME -> {
+
+            }
+            DrawerMenuItem.SAVED_ITEMS -> {
+
+            }
+            DrawerMenuItem.APP_SETTING -> {
+
+            }
+            DrawerMenuItem.HELP -> {
+
             }
         }
     }

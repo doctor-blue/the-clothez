@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#De2c78">
+    <item>
+        <shape>
+            <solid android:color="@color/pink" />
+            <corners android:radius="@dimen/_space50dp" />
+            <padding
+                android:bottom="@dimen/space_screen_small"
+                android:left="@dimen/space_screen_small"
+                android:right="@dimen/space_screen_small"
+                android:top="@dimen/space_screen_small" />
+        </shape>
+    </item>
+</ripple>

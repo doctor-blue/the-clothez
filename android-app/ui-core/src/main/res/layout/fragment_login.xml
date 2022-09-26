@@ -2,79 +2,92 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-    </data>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:splitMotionEvents="false">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.starlight.module.uicore.custom_views.top_app_bar.TopAppBar
+            android:id="@+id/top_bar_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:setTitle="@string/login" />
 
-            <com.starlight.module.uicore.custom_views.top_app_bar.TopAppBar
-                android:id="@+id/top_bar_login"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/_space128dp"
+            android:layout_height="@dimen/_space128dp"
+            android:layout_marginTop="@dimen/space_screen_large"
+            android:src="@drawable/img_woman" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_screen_large">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setTitle="Log In" />
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/space_screen_small">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_avatar"
-                android:layout_width="142dp"
-                android:layout_height="142dp"
-                android:layout_marginTop="48dp"
-                android:src="@drawable/img_woman"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/top_bar_login" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/email"
+                    android:textColor="@color/navy_light"
+                    android:textSize="@dimen/text_size_16" />
 
-            <com.starlight.module.uicore.custom_views.text_field.RoundCornerWithTitleTextField
-                android:id="@+id/textfield_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_avatar"
-                app:setShowEndText="false"
-                app:setTextFieldLabel="Email"
-                app:setTextFieldPasswordToggleEnabled="false" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_screen_super_small"
+                    android:background="@drawable/bg_rounder_light_blue_full"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="center_horizontal"
+                    android:text="guest@starlight.clothez.com"
+                    android:textColor="@color/navy"
+                    android:textSize="@dimen/text_size_18" />
 
-            <com.starlight.module.uicore.custom_views.text_field.RoundCornerWithTitleTextField
-                android:id="@+id/textfield_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textfield_email"
-                app:setEndText="Forgot"
-                app:setShowEndText="true"
-                app:setTextFieldLabel="Password"
-                app:setTextFieldPasswordToggleEnabled="true" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_screen_normal"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/password"
+                    android:textColor="@color/navy_light"
+                    android:textSize="@dimen/text_size_16" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/custom_background_button"
-                android:text="@string/btn_login"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textfield_password" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_screen_super_small"
+                    android:background="@drawable/bg_rounder_light_blue_full"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="center_horizontal"
+                    android:inputType="textPassword"
+                    android:text="nao123456"
+                    android:textColor="@color/navy"
+                    android:textSize="@dimen/text_size_18" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_screen_large"
+                    android:background="@drawable/bg_rounder_pink_full"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
+
+    </LinearLayout>
 </layout>

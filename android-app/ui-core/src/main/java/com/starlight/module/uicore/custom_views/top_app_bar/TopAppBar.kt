@@ -3,6 +3,7 @@ package com.starlight.module.uicore.custom_views.top_app_bar
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.starlight.module.resource.R
@@ -12,7 +13,9 @@ class TopAppBar @JvmOverloads constructor(
     private val ctx: Context,
     private val attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(ctx, attributeSet, defStyleAttr), CustomViewStyle, CustomViewStyle.ClickEvent {
+) : LinearLayout(ctx, attributeSet, defStyleAttr),
+    CustomViewStyle,
+    CustomViewStyle.ClickEvent {
 
     private lateinit var tvTitle: TextView
     private lateinit var btnBack: ImageView

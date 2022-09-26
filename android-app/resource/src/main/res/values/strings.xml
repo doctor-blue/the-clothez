@@ -20,4 +20,11 @@
     <string name="saved_items">Saved Items</string>
     <string name="app_settings">App Settings</string>
     <string name="help_faqs">Help &amp; FAQs</string>
+    <string name="woman">Woman</string>
+    <string name="man">Man</string>
+    <string name="next">Next</string>
+    <string-array name="genders">
+        <item>Woman</item>
+        <item>Man</item>
+    </string-array>
 </resources>
