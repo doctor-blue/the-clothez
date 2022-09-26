@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.starlight.module.domain.model.Status
 import com.starlight.module.domain.repository.AuthenticationRepository
+import com.starlight.module.domain.usecase.validator.ValidatorUseCase
 import com.starlight.module.domain.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
-    private val authRepo: AuthenticationRepository
+    private val authRepo: AuthenticationRepository,
+    private val validatorUseCase: ValidatorUseCase
 ) : ViewModel() {
 
     private val _loginState: MutableStateFlow<DataState<Status>> =
@@ -26,11 +28,11 @@ class AuthenticationViewModel @Inject constructor(
     fun login(
         email: String,
         password: String,
-    ) {
-        viewModelScope.launch {
-            authRepo.emailLogin(email, password).onEach {
-                _loginState.value = it
-            }.collect()
-        }
+    ) = viewModelScope.launch {
+        if (!validatorUseCase.invoke(email, password)) return@launch
+        authRepo.emailLogin(email, password).onEach {
+            _loginState.value = it
+        }.collect()
     }
+
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +32,14 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/space_screen_small">
 
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/pink"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -47,9 +56,9 @@
                     android:background="@drawable/bg_rounder_light_blue_full"
                     android:fontFamily="@font/montserrat_regular"
                     android:gravity="center_horizontal"
-                    android:text="guest@starlight.clothez.com"
                     android:textColor="@color/navy"
-                    android:textSize="@dimen/text_size_18" />
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="guest@starlight.clothez.com" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -69,9 +78,9 @@
                     android:fontFamily="@font/montserrat_regular"
                     android:gravity="center_horizontal"
                     android:inputType="textPassword"
-                    android:text="nao123456"
                     android:textColor="@color/navy"
-                    android:textSize="@dimen/text_size_18" />
+                    android:textSize="@dimen/text_size_18"
+                    tools:text="nao123456" />
 
                 <TextView
                     android:id="@+id/btn_next"
