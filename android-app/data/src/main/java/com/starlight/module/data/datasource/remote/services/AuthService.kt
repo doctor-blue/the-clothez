@@ -1,11 +1,11 @@
-package com.starlight.module.data.datasource.remote
+package com.starlight.module.data.datasource.remote.services
 
 import com.starlight.module.data.datasource.entity.TokenEntity
+import com.starlight.module.data.datasource.remote.IClothezService
 import com.starlight.module.data.datasource.remote.request.LoginRequest
 import com.starlight.module.data.datasource.remote.request.RefreshTokenRequest
 import com.starlight.module.data.datasource.remote.request.SignUpRequest
 import com.starlight.module.data.datasource.remote.response.IResponse
-import com.starlight.module.data.datasource.remote.response.StatusResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

@@ -2,7 +2,7 @@ package com.starlight.module.data.repository
 
 import com.starlight.module.data.datasource.cache.AuthCache
 import com.starlight.module.data.datasource.mappers.UserMapper
-import com.starlight.module.data.datasource.remote.AuthService
+import com.starlight.module.data.datasource.remote.services.AuthService
 import com.starlight.module.data.datasource.remote.request.LoginRequest
 import com.starlight.module.data.datasource.remote.request.RefreshTokenRequest
 import com.starlight.module.data.datasource.remote.request.SignUpRequest
