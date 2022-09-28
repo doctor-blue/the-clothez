@@ -5,7 +5,9 @@ interface DomainMapper<E, M> {
     fun fromDomain(model: M): E
 
     fun toDomainList(entities: List<E>): List<M> {
-        return entities.map { toDomain(it) }
+        return entities.map {
+            toDomain(it)
+        }
     }
 
     fun fromDomainList(models: List<M>): List<E> {

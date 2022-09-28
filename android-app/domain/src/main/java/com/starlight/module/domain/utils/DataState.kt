@@ -1,75 +1,33 @@
 package com.starlight.module.domain.utils
 
+import com.starlight.module.domain.model.Status
+
 sealed class DataState<T>(
     var data: T? = null,
-    var error: Event<Int>? = null
+    var status: Status? = null
 ) {
-    class Success<T>(data: T? = null) : DataState<T>(data = data){
+    class Success<T>(data: T? = null, status: Status? = null) : DataState<T>(data = data, status) {
         override fun toString(): String {
             return "Success ${data.toString()}"
         }
     }
 
-    class Loading<T>(data: T? = null) : DataState<T>(){
+    class Loading<T>(data: T? = null, status: Status?=null) : DataState<T>(
+        data, status
+    ) {
         override fun toString(): String {
             return "Loading ${data.toString()}"
         }
     }
 
-    class Error<T>(code: Int, data: T? = null) :
-        DataState<T>(data = data, error = Event.createErrorEvent(code)){
+    class Error<T>(data: T? = null, status: Status? = null) :
+        DataState<T>(data = data, status = status) {
         override fun toString(): String {
-            return "Error errorCode ${error?.peekContent()}, ${data.toString()}"
+            return "Error ${status?.message}"
         }
     }
-}
-
-
-/**
- * Used as a wrapper for data that is exposed via a LiveData that represents an event.
- */
-class Event<T>(private val content: T) {
-
-    var hasBeenHandled = false
-        private set // Allow external read but not write
-
-    /**
-     * Returns the content and prevents its use again.
-     */
-    fun getContentIfNotHandled(): T? {
-        return if (hasBeenHandled) {
-            null
-        } else {
-            hasBeenHandled = true
-            content
-        }
-    }
-
-    /**
-     * Returns the content, even if it's already been handled.
-     */
-    fun peekContent(): T = content
-
-    override fun toString(): String {
-        return "Event(content=$content, hasBeenHandled=$hasBeenHandled)"
-    }
-
-    companion object {
-
-        fun createErrorEvent(message: String): Event<String>? {
-            return Event(message)
-
-        }
-
-        fun createErrorEvent(code: Int): Event<Int>? {
-            return Event(code)
-
-        }
-    }
-
 
 }
-
 
 
 

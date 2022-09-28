@@ -1,6 +1,5 @@
 package com.starlight.module.data.datasource.remote
 
-import com.starlight.module.data.datasource.remote.services.AuthService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -10,5 +9,5 @@ object RemoteConfig {
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
 
-    val retrofit = builder.build()
+    val retrofit: Retrofit = builder.build()
 }

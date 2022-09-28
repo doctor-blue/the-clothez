@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.gson.Gson
+import com.starlight.app.theclothez.home.HomeViewModel
 import com.starlight.module.domain.utils.DataState
 import com.starlight.module.uicore.BaseFragment
 import com.starlight.module.uicore.R
@@ -16,6 +18,7 @@ import com.starlight.module.uicore.utils.setPreventDoubleClick
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val authenticationViewModel: AuthenticationViewModel by activityViewModels()
@@ -27,6 +30,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     authenticationViewModel.loginState.collect { loginState ->
+                        Log.d("HomeViewModel ", Gson().toJson(loginState))
+
                         // New value received
                         when (loginState) {
                             is DataState.Loading -> {

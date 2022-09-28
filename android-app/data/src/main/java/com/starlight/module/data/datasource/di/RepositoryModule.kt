@@ -1,6 +1,7 @@
 package com.starlight.module.data.datasource.di
 
 import com.starlight.module.data.datasource.cache.AuthCache
+import com.starlight.module.data.datasource.cache.dao.CategoryDao
 import com.starlight.module.data.datasource.mappers.CategoryMapper
 import com.starlight.module.data.datasource.mappers.SubCategoryMapper
 import com.starlight.module.data.datasource.mappers.UserMapper
@@ -33,11 +34,19 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideCategoryRepository(
+        authCache: AuthCache,
         categoryService: CategoryService,
         categoryMapper: CategoryMapper,
+        categoryDao: CategoryDao,
         subCategoryMapper: SubCategoryMapper
     ): CategoryRepository =
-        CategoryRepositoryImpl(categoryService, categoryMapper, subCategoryMapper)
+        CategoryRepositoryImpl(
+            authCache,
+            categoryService,
+            categoryMapper,
+            categoryDao,
+            subCategoryMapper
+        )
 
 
 }

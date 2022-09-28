@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.starlight.module.data.datasource.cache.AuthCache
 import com.starlight.module.data.datasource.cache.ClothezDatabase
+import com.starlight.module.data.datasource.cache.dao.CategoryDao
 import com.starlight.module.data.datasource.remote.RemoteConfig
 import com.starlight.module.data.datasource.remote.services.AuthService
 import com.starlight.module.data.datasource.remote.services.CategoryService
@@ -23,11 +24,16 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application: Application) = Room.databaseBuilder(
+    fun provideDatabase(application: Application): ClothezDatabase = Room.databaseBuilder(
         application,
         ClothezDatabase::class.java,
         ClothezDatabase.DB_NAME
     ).build()
+
+    @Provides
+    @Singleton
+    fun provideCategoryDao(clothezDatabase: ClothezDatabase): CategoryDao =
+        clothezDatabase.categoryDao
 
     @Provides
     @Singleton

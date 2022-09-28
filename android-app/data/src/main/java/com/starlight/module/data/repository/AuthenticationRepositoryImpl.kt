@@ -31,6 +31,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
 
                 if (response.data != null) {
                     // save token cache
+                    response.data.accessToken = "Bearer " + response.data.accessToken
                     authCache.setToken(response.data)
                     emit(
                         DataState.Success(Status(SUCCESS_CODE, "Login success"))
@@ -39,13 +40,12 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 }
                 emit(
                     DataState.Error(
-                        response.status.code,
                         Status(response.status.code, response.status.message)
                     )
                 )
             } catch (e: Exception) {
                 emit(
-                    DataState.Error(-1, Status(-1, "Login error. $e"))
+                    DataState.Error(Status(-1, "Login error. $e"))
                 )
             }
 
@@ -72,14 +72,13 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 }
                 emit(
                     DataState.Error(
-                        response.status.code,
                         Status(response.status.code, response.status.message)
                     )
                 )
 
             } catch (e: Exception) {
                 emit(
-                    DataState.Error(-1, Status(-1, "Signup error."))
+                    DataState.Error(Status(-1, "Signup error."))
                 )
             }
 
@@ -102,13 +101,12 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 }
                 emit(
                     DataState.Error(
-                        response.status.code,
                         Status(response.status.code, response.status.message)
                     )
                 )
             } catch (e: Exception) {
                 emit(
-                    DataState.Error(-1, Status(-1, "Refresh error."))
+                    DataState.Error(Status(-1, "Refresh error."))
                 )
             }
         }
@@ -123,7 +121,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 )
             } catch (e: Exception) {
                 emit(
-                    DataState.Error(-1, Status(-1, "logout error."))
+                    DataState.Error(Status(-1, "logout error."))
                 )
             }
         }
