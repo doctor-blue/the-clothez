@@ -3,6 +3,7 @@ package com.starlight.module.data.datasource.cache
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.starlight.module.data.datasource.cache.dao.CategoryDao
+import com.starlight.module.data.datasource.cache.dao.ProductDao
 import com.starlight.module.data.datasource.entity.CategoryEntity
 import com.starlight.module.data.datasource.entity.SubCategoryEntity
 
@@ -16,6 +17,8 @@ import com.starlight.module.data.datasource.entity.SubCategoryEntity
 abstract class ClothezDatabase : RoomDatabase() {
 
     abstract val categoryDao: CategoryDao
+    abstract val productDao: ProductDao
+
     companion object {
         const val DB_VERSION = 1
         const val DB_NAME = "TheClothez"

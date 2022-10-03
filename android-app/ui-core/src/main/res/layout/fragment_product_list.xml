@@ -1,10 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_screen_small"
+            android:layout_marginTop="@dimen/space_screen_small"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_common_btn"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/space_screen_small">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/img_size_small"
+                    android:layout_height="@dimen/img_size_small"
+                    android:src="@drawable/ic_sort" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_screen_super_small"
+                    android:layout_marginEnd="@dimen/space_screen_super_small"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/sort"
+                    android:textColor="@color/navy" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_space4dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_navi_rounder_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/space_screen_small">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_screen_super_small"
+                    android:layout_marginEnd="@dimen/space_screen_super_small"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/filter"
+                    android:textColor="@color/white"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:layout_width="@dimen/_space24dp"
+                    android:layout_height="@dimen/_space24dp"
+                    android:layout_marginStart="@dimen/space_screen_super_small"
+                    android:layout_marginEnd="@dimen/space_screen_super_small"
+                    android:background="@drawable/bg_circle_white"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/navy_light" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_space4dp"
+            android:layout_marginTop="@dimen/space_screen_small"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/product_item" />
     </LinearLayout>
 </layout>

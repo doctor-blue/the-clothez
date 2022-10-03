@@ -3,7 +3,6 @@ package com.starlight.module.data.datasource.cache.dao
 import androidx.room.*
 import com.starlight.module.data.datasource.entity.CategoryEntity
 import com.starlight.module.data.datasource.entity.SubCategoryEntity
-import com.starlight.module.domain.model.SubCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
