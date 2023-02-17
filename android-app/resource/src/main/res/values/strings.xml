@@ -26,6 +26,12 @@
     <string name="all">All</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="clear">Clear</string>
+    <string name="price_range">Price range</string>
+    <string name="category">Category</string>
+    <string name="size">Size</string>
+    <string name="apply">Apply</string>
+    <string name="price_low_to_high">Price Low to High</string>
     <string-array name="genders">
         <item>Woman</item>
         <item>Man</item>

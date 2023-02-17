@@ -1,5 +1,6 @@
 package com.starlight.module.data.repository
 
+import android.provider.ContactsContract.Data
 import com.starlight.module.data.datasource.cache.dao.ProductDao
 import com.starlight.module.data.datasource.mappers.ProductColorMapper
 import com.starlight.module.data.datasource.mappers.ProductMapper
@@ -21,7 +22,7 @@ class ProductRepositoryImpl @Inject constructor(
     val sizeMapper: ProductSizeMapper,
 ) : ProductRepository {
 
-    override suspend fun getAllProduct(): Flow<List<Product>> = flow {
+    override suspend fun getAllProduct(): Flow<DataState<List<Product>>> = flow {
 
     }
 
